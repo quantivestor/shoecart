@@ -1,0 +1,37 @@
+{% extends 'shop/shop_base.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 rounded-4">
+        <h2 class="text-center text-primary">Update Shop Profile</h2>
+
+        <form method="POST" class="mt-4">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_shop_name" class="form-label">Shop Name</label>
+                {{ form.shop_name }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_address" class="form-label">Address</label>
+                {{ form.address }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_contact_info" class="form-label">Contact Info</label>
+                {{ form.contact_info }}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

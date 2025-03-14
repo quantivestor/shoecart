@@ -1,0 +1,13 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Delete Product</h2>
+    <p>Are you sure you want to delete "{{ product.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'view_products' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

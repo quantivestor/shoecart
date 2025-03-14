@@ -1,0 +1,43 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Product List</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" width="80" height="80">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ product.description }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.category }}</td>
+                <td>
+                    <a href="{% url 'update_product' product.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'add_product' %}" class="btn btn-success">Add New Product</a>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Admin Dashboard</h1>
+
+    <div class="row">
+        <!-- Manage Shops -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Shops</h5>
+                    <p class="card-text">Add, Edit, or Remove Shops</p>
+                    <a href="{% url 'list_shop_details' %}" class="btn btn-primary">Go to Shops</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Users -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Users</h5>
+                    <p class="card-text">View and Manage Users</p>
+                    <a href="{% url 'list_customer_details' %}" class="btn btn-primary">Go to Users</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Shops -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Review Shops</h5>
+                    <p class="card-text">Approve or Reject Shops</p>
+                    <a href="{% url 'review_shop_registrations' %}" class="btn btn-warning">Review Shops</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

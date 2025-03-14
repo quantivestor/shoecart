@@ -1,0 +1,33 @@
+{% extends 'customer/user_base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Your Orders</h2>
+
+    {% if orders %}
+        <ul class="list-group">
+            {% for order in orders %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ order.product.name }} - Ordered on {{ order.ordered_at|date:"Y-m-d" }}
+                    
+                    {% if order.is_delivered %}
+                        <span class="badge bg-success">Delivered</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                        <!-- Google Maps Link for Pending Orders -->
+                        <a 
+                            href="https://www.google.com/maps/search/?api=1&query={{ order.product.shop.point.y }},{{ order.product.shop.point.x }}" 
+                            target="_blank"
+                            class="btn btn-primary btn-sm ms-2"
+                        >
+                            📍 View on Map
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No orders found.</p>
+    {% endif %}
+</div>
+{% endblock %}

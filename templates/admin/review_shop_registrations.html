@@ -1,0 +1,40 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block title %}Review Shop Registrations{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Review Shop Registrations</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Shop Name</th>
+                <th>Owner Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Contact Info</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shop in pending_shops %}
+            <tr>
+                <td>{{ shop.shop_name }}</td>
+                <td>{{ shop.owner_name }}</td>
+                <td>{{ shop.email }}</td>
+                <td>{{ shop.address }}</td>
+                <td>{{ shop.contact_info }}</td>
+                <td>
+                    <a href="{% url 'approve_shop' shop.id %}" class="btn btn-success btn-sm">Approve</a>
+                    <a href="{% url 'reject_shop' shop.id %}" class="btn btn-danger btn-sm">Reject</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No pending shop registrations.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
