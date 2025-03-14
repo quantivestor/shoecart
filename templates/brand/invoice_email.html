@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice for Your Order</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; }
+        .container { background-color: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        h2 { color: #4CAF50; }
+        p { margin: 5px 0; }
+        .details { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Thank You for Your Purchase!</h2>
+        <p>Hello {{ customer_name }},</p>
+        <p>Your order has been successfully delivered.</p>
+
+        <div class="details">
+            <strong>Order Details:</strong>
+            <p><b>Order ID:</b> {{ order.id }}</p>
+            <p><b>Product Name:</b> {{ product_name }}</p>
+            <p><b>Price:</b> ${{ price }}</p>
+            <p><b>Quantity:</b> {{ quantity }}</p>
+            <p><b>Total Price:</b> ${{ price }}</p>
+            <p><b>Order Date:</b> {{ order_date }}</p>
+        </div>
+
+        <p>For any questions, feel free to contact us.</p>
+        <p>Best regards,<br>Your Brand Team</p>
+    </div>
+</body>
+</html>

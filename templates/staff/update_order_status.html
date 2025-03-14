@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Order Status</title>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f9f9f9; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); }
+        h2 { text-align: center; color: #2874F0; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .btn { background-color: #4CAF50; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; width: 100%; }
+        .btn:hover { background-color: #45a049; }
+        .alert { padding: 10px; margin-top: 15px; border-radius: 5px; text-align: center; }
+        .success { background-color: #4CAF50; color: white; }
+        .error { background-color: #f44336; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Order Status</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_track_status">Tracking Status:</label>
+                {{ form.track_status }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_is_delivered">
+                    {{ form.is_delivered.label_tag }} 
+                    {{ form.is_delivered }}
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Update Status</button>
+        </form>
+
+        <br>
+        <a href="{% url 'staff_dashboard' %}" class="btn" style="background-color: #2874F0;">Back to Orders</a>
+    </div>
+</body>
+</html>

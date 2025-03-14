@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ShopConnect</title>
+    <title>brandConnect</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -117,13 +117,13 @@
 </head>
 <body>
     <div class="moving-cards">
-        <div class="card">Manage Shops Efficiently</div>
+        <div class="card">Manage brands Efficiently</div>
         <div class="card">Explore Amazing Products</div>
         <div class="card">Track Your Orders Seamlessly</div>
     </div>
 
     <div class="container">
-        <h1>Welcome to ShopEase</h1>
+        <h1>Welcome to ShoeCart</h1>
         {% if messages %}
         <div class="messages">
             {% for message in messages %}
@@ -137,7 +137,8 @@
         <div class="registration-options">
             <p>New here? Register as:</p>
             <button class="main-button" onclick="location.href='{% url 'user_register' %}'">User</button>
-            <button class="main-button" onclick="location.href='{% url 'shop_register' %}'">Shop</button>
+            <button class="main-button" onclick="location.href='{% url 'brand_register' %}'">Brand</button>
+            <button class="main-button" onclick="location.href='{% url 'staff_register' %}'">Staff</button>
         </div>
         <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
     </div>

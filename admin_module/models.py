@@ -20,8 +20,9 @@ class CustomUserManager(BaseUserManager):
 class User(AbstractUser):
     ROLE_CHOICES = [
         ('admin', 'Admin'),
-        ('shop', 'Shop Owner'),
+        ('brand', 'Brand Owner'),
         ('customer', 'Customer'),
+        ('staff', 'Staff'),
     ]
     
     email = models.EmailField(unique=True)  # Ensure email is unique

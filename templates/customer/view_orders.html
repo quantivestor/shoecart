@@ -12,16 +12,28 @@
                     
                     {% if order.is_delivered %}
                         <span class="badge bg-success">Delivered</span>
+                        {% if order.feedback_rating %}
+                            <div class="rating">
+                                {% for star in "★★★★★"|slice:order.feedback_rating %}
+                                    <span style="color: #ffc107;">★</span>
+                                {% endfor %}
+                                {% for empty_star in "★★★★★"|slice:5|slice:":-order.feedback_rating" %}
+                                    <span style="color: #e4e5e9;">★</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <a href="{% url 'add_feedback' order.product.id %}">Rate the product</a>
+                        {% endif %}
                     {% else %}
                         <span class="badge bg-warning text-dark">Pending</span>
-                        <!-- Google Maps Link for Pending Orders -->
+                        <!-- Google Maps Link for Pending Orders
                         <a 
-                            href="https://www.google.com/maps/search/?api=1&query={{ order.product.shop.point.y }},{{ order.product.shop.point.x }}" 
+                            href="https://www.google.com/maps/search/?api=1&query={{ order.product.brand.point.y }},{{ order.product.brand.point.x }}" 
                             target="_blank"
                             class="btn btn-primary btn-sm ms-2"
                         >
                             📍 View on Map
-                        </a>
+                        </a> -->
                     {% endif %}
                 </li>
             {% endfor %}
@@ -31,3 +43,4 @@
     {% endif %}
 </div>
 {% endblock %}
+

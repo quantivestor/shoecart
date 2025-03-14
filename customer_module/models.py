@@ -1,7 +1,7 @@
 from django.db import models
 
 from admin_module.models import User
-from shop_module.models import Product as Product
+from brand_module.models import Product as Product
 
 
 # Create your models here.
@@ -26,6 +26,8 @@ class Feedback(models.Model):
 class Cart(models.Model):
     user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    size = models.CharField(max_length=10, null=True, blank=True) 
+    quantity = models.IntegerField(default=1)
     added_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -35,7 +37,10 @@ class Order(models.Model):
     user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    size = models.CharField(max_length=10, null=True, blank=True) 
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     ordered_at = models.DateTimeField(auto_now_add=True)
+    track_status = models.CharField(max_length=100, null=True, blank=True, default="Ready to dispatch")
     is_delivered = models.BooleanField(default=False)
 
     def __str__(self):

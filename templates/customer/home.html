@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Home - ShopEase</title>
+    <title>User Home - ShoeCart</title>
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: #f1f3f6; margin: 0; padding: 0; }
         .navbar { background-color: #2874F0; color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; }
@@ -89,11 +89,23 @@
             margin: 0 10px;
         }
 
+        .alert {
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            color: #fff;
+            text-align: center;
+        }
+        .success { background-color: #4CAF50; }  /* Green */
+        .error { background-color: #f44336; }    /* Red */
+        .info { background-color: #2196F3; }     /* Blue */
+        .warning { background-color: #ff9800; }  /* Orange */
+
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div><b>ShopEase</b></div>
+        <div><b>ShoeCart</b></div>
         <div>
             <a href="{% url 'user_home' %}">🏠 Home</a>
             <a href="{% url 'view_cart' %}">🛒 Cart</a>
@@ -101,6 +113,16 @@
             <a href="{% url 'user_logout' %}">🚪 Logout</a>
         </div>
     </div>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <div class="container">
         <!-- Search Bar -->
@@ -166,10 +188,33 @@
                     {% endif %}
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.description }}</p>
-                    <p class="product-price">₹{{ product.price }}</p>
-                    <p class="product-quantity">Available Quantity: {{ product.stock }}</p>
-                    <p>Shop: {{ product.shop.shop_name }}</p>
-                    <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart">Add to Cart</a>
+                    <!-- Sizes Dropdown -->
+                    {% if product.sizes %}
+                        <label for="size-{{ product.id }}">Select Size:</label>
+                        <select id="size-{{ product.id }}" name="size">
+                            {% for size in product.get_size_list %}
+                                <option value="{{ size }}">{{ size }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+                    <!-- Pricing Section -->
+                    <div class="pricing">
+                        {% if product.offer_percentage %}
+                            <p class="original-price"><del>₹{{ product.price }}</del></p>
+                            <p class="discounted-price">₹{{ product.discounted_price }}</p>
+                            <p class="offer-percentage">{{ product.offer_percentage }}% OFF</p>
+                        {% else %}
+                            <p class="product-price">₹{{ product.price }}</p>
+                        {% endif %}
+                    </div>
+                    <!-- <p class="product-quantity">Available Quantity: {{ product.stock }}</p> -->
+                    <p>Brand: {{ product.brand.brand_name }}</p>
+                    <!-- Add to Cart Button with Size Selection -->
+                    <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="size" id="selected-size-{{ product.id }}">
+                        <button type="submit" class="add-to-cart">Add to Cart</button>
+                    </form>
                 </div>
             {% empty %}
                 <p>No products found matching your search.</p>
@@ -211,6 +256,23 @@
                 alert("Geolocation is not supported by this browser.");
             }
         }
+    </script>
+    <script>
+        // Ensure selected size is included in the form submission
+        document.querySelectorAll("form").forEach(form => {
+            form.addEventListener("submit", function(event) {
+                let productId = this.action.split('/').slice(-2, -1)[0]; // Extract product ID from URL
+                let sizeSelect = document.getElementById("size-" + productId);
+                let hiddenInput = document.getElementById("selected-size-" + productId);
+                hiddenInput.value = sizeSelect.value;
+            });
+        });
+    </script>
+    <script>
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => alert.style.display = 'none');
+        }, 3000); // Auto-hide after 3 seconds
     </script>
 </body>
 </html>

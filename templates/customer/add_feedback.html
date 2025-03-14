@@ -1,0 +1,42 @@
+{% extends 'customer/user_base.html' %}
+
+{% block content %}
+<head>
+    <title>Add Feedback - {{ product.name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; }
+        .container { background: #fff; padding: 20px; max-width: 500px; margin: 50px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); }
+        h1 { text-align: center; color: #2874F0; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        textarea, input { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; }
+        button { background-color: #2874F0; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 15px; }
+        button:hover { background-color: #ff9f00; }
+        .message { text-align: center; margin-bottom: 15px; }
+        .success { color: #388e3c; }
+        .error { color: #d32f2f; }
+        .links { text-align: center; margin-top: 15px; }
+        .links a { text-decoration: none; color: #2874F0; margin: 0 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Review for {{ product.name }}</h1>
+
+        {% if messages %}
+            <div class="message">
+                {% for message in messages %}
+                    <p class="{% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+</body>
+{% endblock %}
