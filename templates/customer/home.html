@@ -17,4 +17,11 @@
         {% include 'customer/product_list.html' %}
     </div>
 </div>
+
+<script>
+    setTimeout(function () {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => alert.style.display = 'none');
+    }, 3000);
+</script>
 {% endblock %}
