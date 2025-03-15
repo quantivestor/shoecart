@@ -1,0 +1,164 @@
+<div class="products-page">
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <form id="searchForm" method="GET" action="{% url 'user_home' %}">
+            <input type="text" name="product_name" placeholder="Search for products..."
+                value="{{ request.GET.product_name }}" />
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <button class="primary-btn" type="button" onclick="getLocationAndSearch()">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+        <button class="btn btn-sm btn-primary filter-btn" data-bs-toggle="offcanvas" data-bs-target="#filterPanel">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/filter.png" alt="Filter" />
+        </button>
+    </div>
+
+    <!-- Filter Button -->
+
+
+    <!-- Bootstrap Offcanvas Filter Panel -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterPanel">
+        <div class="offcanvas-header">
+            <h3 class="sub-title">Filter Products</h3>
+            <button type="button" data-bs-dismiss="offcanvas" class="filter-close-btn">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <form id="filterForm" method="GET" action="{% url 'user_home' %}">
+                <div>
+                    <label>Category:</label>
+                    <select name="category">
+                        <option value="">All Categories</option>
+                        {% for category in categories %}
+                        <option value="{{ category }}" {% if request.GET.catagory == category %}selected{% endif %}>
+                            {{ category }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+
+                    <label>Min Price:</label>
+                    <input type="number" name="min_price" class="form-control" value="{{ request.GET.min_price }}"
+                        min="{{ price_range.min }}" />
+                </div>
+
+                <div>
+                    <label>Max Price:</label>
+                    <input type="number" name="max_price" class="form-control" value="{{ request.GET.max_price }}"
+                        max="{{ price_range.max }}" />
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="in_stock" {% if request.GET.in_stock %}checked{% endif %} />
+                    <label class="form-check-label">In Stock</label>
+                </div>
+
+                <button type="submit" class="btn primary-btn mt-3">Apply Filters</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Products List -->
+    <div class="product-list">
+        {% for product in products %}
+        <div class="product-card">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+            No Image
+            {% endif %}
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <!-- Sizes Dropdown -->
+            {% if product.sizes %}
+            <label for="size-{{ product.id }}">Select Size:</label>
+            <select id="size-{{ product.id }}" name="size">
+                {% for size in product.get_size_list %}
+                <option value="{{ size }}">{{ size }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+            <!-- Pricing Section -->
+            <div class="pricing">
+                {% if product.offer_percentage %}
+                <p class="original-price"><del>₹{{ product.price }}</del></p>
+                <p class="discounted-price">₹{{ product.discounted_price }}</p>
+                <p class="offer-percentage">{{ product.offer_percentage }}% OFF</p>
+                {% else %}
+                <p class="product-price">₹{{ product.price }}</p>
+                {% endif %}
+            </div>
+            <!-- <p class="product-quantity">Available Quantity: {{ product.stock }}</p> -->
+            <p>Brand: {{ product.brand.brand_name }}</p>
+            <!-- Add to Cart Button with Size Selection -->
+            <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="size" id="selected-size-{{ product.id }}">
+                <button type="submit" class="add-to-cart">Add to Cart</button>
+            </form>
+        </div>
+        {% empty %}
+        <p>No products found matching your search.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if products.has_previous %}
+        <a href="?page=1" class="page-btn">First</a>
+        <a href="?page={{ products.previous_page_number }}" class="page-btn">Previous</a>
+        {% endif %}
+
+        <span class="current-page">Page {{ products.number }} of {{ products.paginator.num_pages }}</span>
+
+        {% if products.has_next %}
+        <a href="?page={{ products.next_page_number }}" class="page-btn">Next</a>
+        <a href="?page={{ products.paginator.num_pages }}" class="page-btn">Last</a>
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+    function toggleFilterPanel() {
+        let panel = document.getElementById('filterPanel');
+        panel.classList.toggle('show');
+
+        if (panel.classList.contains('show')) {
+            panel.style.display = 'block';  // Show the panel
+            setTimeout(() => {
+                panel.style.opacity = '1';
+                panel.style.transform = 'translateX(0)';
+            }, 50);
+        } else {
+            panel.style.opacity = '0';
+            panel.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                panel.style.display = 'none';  // Hide after animation
+            }, 300);
+        }
+    }
+
+</script>
+<script>
+    // Ensure selected size is included in the form submission
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", function (event) {
+            let productId = this.action.split('/').slice(-2, -1)[0]; // Extract product ID from URL
+            let sizeSelect = document.getElementById("size-" + productId);
+            let hiddenInput = document.getElementById("selected-size-" + productId);
+            hiddenInput.value = sizeSelect.value;
+        });
+    });
+</script>
+<script>
+    setTimeout(function () {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => alert.style.display = 'none');
+    }, 3000);
+</script>
