@@ -71,10 +71,10 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required>
             </div>
-            <button type="submit" class="primary-btn w-100">Login</button>
+            <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
+            <button type="submit" class="primary-btn w-100 my-4">Login</button>
         </form>
     
-        <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
     </div>
 </div>
 {% endblock %}
