@@ -1,172 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Order List</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f3f4f6;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
 
-        .navbar {
-            background-color: #4CAF50;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            margin: 0 10px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 30px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .btn {
-            background-color: #2874F0;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            background-color: #1a5fb4;
-        }
-
-        .status-delivered {
-            color: #4CAF50;
-            font-weight: bold;
-        }
-
-        .status-pending {
-            color: #F57C00;
-            font-weight: bold;
-        }
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .page-btn {
-            display: inline-block;
-            padding: 8px 15px;
-            margin: 5px;
-            background-color: #2874F0;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .page-btn:hover {
-            background-color: #ff9f00;
-        }
-        .current-page {
-            font-weight: bold;
-            margin: 0 10px;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar with Home and Logout -->
-    <div class="navbar">
-        <a href="{% url 'home' %}">🏠 Home</a>
-        <a href="{% url 'staff_logout' %}">🚪 Logout</a>
-    </div>
-
-    <div class="container">
-        <div>
+{% block content %}
+<div class="container">
+    <div>
         <h2>📋 Order List</h2>
 
         {% if orders %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in orders %}
-                    <tr>
-                        <td>{{ order.id }}</td>
-                        <td>{{ order.user.user.username }}</td>
-                        <td>{{ order.product.name }}</td>
-                        <td>{{ order.quantity }}</td>
-                        <td class="{% if order.is_delivered %}status-delivered{% else %}status-pending{% endif %}">
-                            {{ order.track_status }}
-                        </td>
-                        <td>
-                            <a href="{% url 'update_order_status' order.id %}" class="btn">Update Status</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user.user.username }}</td>
+                    <td>{{ order.product.name }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td class="{% if order.is_delivered %}status-delivered{% else %}status-pending{% endif %}">
+                        {{ order.track_status }}
+                    </td>
+                    <td>
+                        <a href="{% url 'update_order_status' order.id %}" class="btn">Update Status</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         {% else %}
-            <p style="text-align: center; color: #777;">No orders found.</p>
+        <p style="text-align: center; color: #777;">No orders found.</p>
         {% endif %}
     </div>
     <!-- Pagination -->
     <div class="pagination">
         {% if orders.has_previous %}
-            <a href="?page=1" class="page-btn">First</a>
-            <a href="?page={{ orders.previous_page_number }}" class="page-btn">Previous</a>
+        <a href="?page=1" class="page-btn">First</a>
+        <a href="?page={{ orders.previous_page_number }}" class="page-btn">Previous</a>
         {% endif %}
 
         <span class="current-page">Page {{ orders.number }} of {{ orders.paginator.num_pages }}</span>
 
         {% if orders.has_next %}
-            <a href="?page={{ orders.next_page_number }}" class="page-btn">Next</a>
-            <a href="?page={{ orders.paginator.num_pages }}" class="page-btn">Last</a>
+        <a href="?page={{ orders.next_page_number }}" class="page-btn">Next</a>
+        <a href="?page={{ orders.paginator.num_pages }}" class="page-btn">Last</a>
         {% endif %}
     </div>
-    </div>
-</body>
-</html>
+</div>
+
+{% endblock %}

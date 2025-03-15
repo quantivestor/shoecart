@@ -1,7 +1,7 @@
-<div class="products-page">
+<div class="products-page" id="productList">
     <!-- Search Bar -->
     <div class="search-bar">
-        <form id="searchForm" method="GET" action="{% url 'user_home' %}">
+        <form id="searchForm" method="GET" action="{% url 'home' %}#productList">
             <input type="text" name="product_name" placeholder="Search for products..."
                 value="{{ request.GET.product_name }}" />
             <input type="hidden" id="latitude" name="latitude">
@@ -143,6 +143,19 @@
             }, 300);
         }
     }
+    function getLocationAndSearch() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('latitude').value = position.coords.latitude;
+                    document.getElementById('longitude').value = position.coords.longitude;
+                    document.getElementById('searchForm').submit();
+                }, function(error) {
+                    alert("Location access denied. Please enable location services.");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
 
 </script>
 <script>

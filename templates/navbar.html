@@ -8,16 +8,20 @@
     <div>
         <ul class="navbar-nav me-auto">
             {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'view_cart' %}"><i
-                        class="bi bi-cart3 highlight-text"></i> </a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'view_orders' %}"><i
-                        class="bi bi-bag-check  highlight-text"></i> </a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'user_logout' %}"><i
-                        class="bi bi-box-arrow-right logout"></i></a></li>
+                {% if user.role == 'customer' %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'view_cart' %}"><i
+                                class="bi bi-cart3 highlight-text"></i> </a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'view_orders' %}"><i
+                                class="bi bi-bag-check  highlight-text"></i> </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'user_logout' %}"><i
+                                class="bi bi-box-arrow-right logout"></i></a></li>
+                {% elif user.role == 'staff' %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'staff_logout' %}"><i
+                                class="bi bi-box-arrow-right logout"></i></a></li>
+                {% endif %}
             {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'user_login' %}"><i
-                        class="bi bi-person"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i class="bi bi-person"></i></a></li>
             {% endif %}
         </ul>
     </div>

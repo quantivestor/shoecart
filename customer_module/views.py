@@ -201,7 +201,7 @@ def user_home(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'customer/home.html', {'products': page_obj, 'categories': categories, 'colors': colors})
+    return render(request, 'home.html', {'products': page_obj, 'categories': categories, 'colors': colors})
 
 @login_required
 def user_logout(request):

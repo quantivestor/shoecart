@@ -11,7 +11,7 @@ body {
 }
 
 #outer-wrap {
-  min-height: 200vh;
+  min-height: 95vh;
   position: relative;
 }
 
@@ -32,12 +32,32 @@ body {
   font-weight: 400;
 }
 
+.main-title-md {
+  font-size: 24px;
+  color: #fff;
+  font-weight: 400;
+}
+
+.sub-title-md {
+  font-size: 18px;
+  color: #fff;
+  font-weight: 400;
+}
+
 .font-bold {
   font-weight: 600;
 }
 
 .highlight-text {
   color: #43ffd3;
+}
+
+.section-title {
+  margin: 50px 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 2rem;
+  padding: 20px;
 }
 
 input {
@@ -61,7 +81,7 @@ input {
 }
 
 .navbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   padding: 5px 5%;
   margin: 0 auto;
   width: 100%;
@@ -146,7 +166,7 @@ input {
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid #383f4b;
+  border: 1px solid #2A2F38;
   border-radius: 5px;
 }
 .products-page .search-bar form input {
@@ -198,18 +218,36 @@ input {
   flex-direction: row;
 }
 .offcanvas .offcanvas-body form select {
-  border: 1px solid #383f4b;
+  border: 1px solid #2A2F38;
   border-radius: 5px;
   padding: 10px;
   background-color: transparent;
   color: #fff;
 }
 .offcanvas .offcanvas-body form input {
-  border: 1px solid #383f4b;
+  border: 1px solid #2A2F38;
   border-radius: 5px;
   padding: 10px;
   background-color: transparent;
   color: #fff;
+}
+
+.login-container {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: #161B22;
+  color: #fff;
+  background: transparent;
+  padding: 20px;
+  border-radius: 12px;
+  width: 500px;
+  border: 1px solid #2A2F38;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
 }
 
 /*# sourceMappingURL=styles.css.map */

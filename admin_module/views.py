@@ -6,7 +6,8 @@ from django.contrib.auth import logout
 
 from .models import User
 from customer_module.models import Customer
-from brand_module.models import Brand
+from brand_module.models import Brand, Product
+from django.core.paginator import Paginator
 
 
 @staff_member_required
@@ -73,7 +74,46 @@ def delete_customer(request, cus_id):
     return redirect('list_customer_details')
 
 def home(request):
-    return render(request, 'home.html')
+    product_name = request.GET.get('product_name', '')
+
+    # New Filters
+    category = request.GET.get('category', '')
+    color = request.GET.get('color', '')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    in_stock = request.GET.get('in_stock')
+
+    products = Product.objects.all()
+    categories = Product.objects.values_list('category', flat=True).distinct()
+    colors = Product.objects.values_list('color', flat=True).distinct()
+
+    # Filter by Product Name
+    if product_name:
+        products = products.filter(name__icontains=product_name)
+
+    # Filter by Category
+    if category:
+        products = products.filter(category__iexact=category)
+
+    # Filter by Color
+    if color:
+        products = products.filter(color__iexact=color)
+
+    # Filter by Price Range
+    if min_price:
+        products = products.filter(price__gte=min_price)
+    if max_price:
+        products = products.filter(price__lte=max_price)
+
+    # Filter by In Stock
+    if in_stock:
+        products = products.filter(stock__gt=0)
+
+    paginator = Paginator(products, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'home.html', {'products': page_obj, 'categories': categories, 'colors': colors})
 
 def userlogin(request):
     if request.method == 'POST':
@@ -117,4 +157,9 @@ def userlogin(request):
                 messages.error(request, 'No account.')
         else:
             messages.error(request, 'Invalid email or password.')
-    return redirect('home')
+
+        return redirect('home')
+    
+    elif request.method == 'GET':
+        return render(request, 'login.html')
+    

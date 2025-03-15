@@ -11,7 +11,7 @@ $secondary-color: #43ffd3;
 $btn-primary: #00C9A7;
 $btn-primary-hover: #009E85;
 $btn-secondary: #1F2933;
-$border-color: #383f4b;
+$border-color: #2A2F38;
 $hover-border: #43FFD3;
 $card-bg: #1C2128;
 
@@ -28,7 +28,7 @@ body {
 }
 
 #outer-wrap {
-    min-height: 200vh;
+    min-height: 95vh;
     position: relative;
 }
 .wrapper{
@@ -37,7 +37,7 @@ body {
 }
 
 @mixin box-shadow {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .main-title {
@@ -51,6 +51,19 @@ body {
     color: $primary-color;
     font-weight: 400;
 }
+
+.main-title-md {
+    font-size: 24px;
+    color: $primary-color;
+    font-weight: 400;
+}
+
+.sub-title-md {
+    font-size: 18px;
+    color: $primary-color;
+    font-weight: 400;
+}
+
 .font-bold{
     font-weight: 600;
 }
@@ -59,7 +72,13 @@ body {
     color: $secondary-color;
 }
 
-
+.section-title{
+    margin: 50px 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 2rem;
+    padding: 20px;
+}
 input{
     border: none;
     outline: none;
@@ -247,4 +266,20 @@ input{
             }
         }
     }
+}
+.login-container{
+    @include box-shadow;
+    background-color: $bg-color;
+    color: $primary-color;
+    background: transparent;
+    padding: 20px;
+    border-radius: 12px;
+    width: 500px;
+    border: 1px solid $border-color;
+}
+.center-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
 }
