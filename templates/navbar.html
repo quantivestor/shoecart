@@ -1,14 +1,22 @@
 <nav class="navbar navbar-expand-lg d-flex align-items-center justify-content-between">
     <div class="">
         <!-- Left Section: Logo and Nav Links -->
-         {% if user.role == 'customer' %}
-            <a class="navbar-brand main-title" href="{% url 'user_home' %}">SHOE<span class="highlight-text">CART</span></a>
+        {% if user.role == 'customer' %}
+        <a class="navbar-brand main-title" href="{% url 'user_home' %}">SHOE<span class="highlight-text">CART</span></a>
         {% elif user.role == 'staff' %}
-            <a class="navbar-brand main-title" href="{% url 'staff_dashboard' %}">SHOE<span class="highlight-text">CART</span></a>
+        <a class="navbar-brand main-title" href="{% url 'staff_dashboard' %}">SHOE<span
+                class="highlight-text">CART</span></a>
         {% elif user.role == 'brand' %}
-            <a class="navbar-brand main-title" href="{% url 'brand_dashboard' %}">SHOE<span class="highlight-text">CART</span></a>
+        <a class="navbar-brand main-title" href="{% url 'brand_dashboard' %}">SHOE<span
+                class="highlight-text">CART</span></a>
+        {% elif user.is_superuser %}
+        <p class="admin-nav-brand">
+            <a class="navbar-brand main-title" href="{% url 'admin_dashboard' %}">SHOE<span
+                class="highlight-text">CART</span></a>
+                <span>admin</span>
+        </p>
         {% else %}
-            <a class="navbar-brand main-title" href="{% url 'home' %}">SHOE<span class="highlight-text">CART</span></a>
+        <a class="navbar-brand main-title" href="{% url 'home' %}">SHOE<span class="highlight-text">CART</span></a>
         {% endif %}
         </button>
 
@@ -18,55 +26,73 @@
             {% if user.is_authenticated %}
             {% if user.role == 'customer' %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'view_cart' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cart">
+                <a class="nav-link" href="{% url 'view_cart' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Cart">
                     <i class="bi bi-cart3 highlight-text"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'view_orders' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Orders">
+                <a class="nav-link" href="{% url 'view_orders' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Orders">
                     <i class="bi bi-bag-check  highlight-text"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_logout' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Logout">
+                <a class="nav-link" href="{% url 'user_logout' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Logout">
                     <i class="bi bi-box-arrow-right logout"></i>
                 </a>
             </li>
             {% elif user.role == 'staff' %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'staff_logout' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Logout">
+                <a class="nav-link" href="{% url 'staff_logout' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Logout">
                     <i class="bi bi-box-arrow-right logout"></i>
                 </a>
             </li>
 
             {% elif user.role == 'brand' %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'brand_dashboard' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Home">
+                <a class="nav-link" href="{% url 'brand_dashboard' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Home">
                     <i class="bi bi-house"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'view_products' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Products">
+                <a class="nav-link" href="{% url 'view_products' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Products">
                     <i class="bi bi-bag"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'view_feedbacks' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Feedbacks">
+                <a class="nav-link" href="{% url 'view_feedbacks' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Feedbacks">
                     <i class="bi bi-chat"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'view_sell_history' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sell History">
+                <a class="nav-link" href="{% url 'view_sell_history' %}" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-title="Sell History">
                     <i class="bi bi-bag-check"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'brand_profile' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Profile">
+                <a class="nav-link" href="{% url 'brand_profile' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Profile">
                     <i class="bi bi-person"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'brand_logout' %}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Logout">
+                <a class="nav-link" href="{% url 'brand_logout' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Logout">
+                    <i class="bi bi-box-arrow-right logout"></i>
+                </a>
+            </li>
+
+            {% elif user.is_superuser %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin_logout' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Logout">
                     <i class="bi bi-box-arrow-right logout"></i>
                 </a>
             </li>

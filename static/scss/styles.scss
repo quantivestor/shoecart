@@ -40,10 +40,13 @@ body {
 @mixin box-shadow {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
+
 @mixin box-shadow-lg {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
-
+.text-success{
+    color: $secondary-color !important;
+}
 .main-title {
     font-size: 28px;
     color: $primary-color;
@@ -56,7 +59,7 @@ body {
     font-weight: 400;
 }
 
-.sub-title-sm{
+.sub-title-sm {
     font-size: 16px;
     color: $primary-color;
     font-weight: 400;
@@ -111,9 +114,11 @@ input {
 
     }
 }
-.btn-primary-sm{
+
+.btn-primary-sm {
     background-color: $btn-primary;
-    &:hover{
+
+    &:hover {
         border: 1px solid $btn-primary-hover;
     }
 }
@@ -328,8 +333,8 @@ input {
     border-radius: 5px;
     padding: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
-   @include box-shadow-lg;
-   position: relative;
+    @include box-shadow-lg;
+    position: relative;
 }
 
 .product-image {
@@ -340,17 +345,20 @@ input {
     margin-bottom: 10px;
 }
 
-.product-info{
+.product-info {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .product-name{
+
+    .product-name {
         display: flex;
         flex-direction: column;
-        h3{
+
+        h3 {
             font-size: 14px;
         }
-        p{
+
+        p {
             font-size: 12px;
             color: #ccc;
         }
@@ -377,37 +385,41 @@ select {
     font-size: 12px;
     margin-top: 5px;
 }
-.size-label{
+
+.size-label {
     font-size: 12px;
     color: #ccc;
     margin-top: 5px;
 }
-.top-section{
-position: relative;
-form{
-    position: absolute;
-    top: 0px;
-    right: 10px;
-}
+
+.top-section {
+    position: relative;
+
+    form {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+    }
 }
 
 
-.cart-item{
+.cart-item {
     display: grid;
     grid-template-columns: 20px 150px 1fr 60px;
     background-color: $bg-color;
     color: $primary-color;
 }
 
-.cart-image-section{
+.cart-image-section {
     position: relative;
 
-    img{
+    img {
         height: 150px;
         object-fit: cover;
         border-radius: 8px;
     }
-    .quantity-controls{
+
+    .quantity-controls {
         background-color: #fff;
         display: flex;
         align-items: center;
@@ -419,60 +431,78 @@ form{
         left: 0px;
         right: 0px;
         height: 30px;
-        button{
+
+        button {
             border: none;
             background-color: transparent;
             color: #1F2933;
             font-size: 14px;
         }
-        input{
+
+        input {
             border: none;
             background-color: transparent;
             color: #1F2933;
             font-size: 14px;
         }
+
         font-size: 12px;
         color: #ccc;
     }
 }
 
-.order-summary{
+.order-summary {
     background-color: $bg-color;
     color: $primary-color;
     padding: 20px;
     border-radius: 8px;
 }
-.order-status{
-   font-size: 14px;
-   font-weight: 500;
+
+.order-status {
+    font-size: 14px;
+    font-weight: 500;
 }
-.order-card{
+
+.order-card {
     background-color: $bg-color;
     color: $primary-color;
     padding: 20px;
     border-radius: 8px;
 }
-.text-secondary{
+
+.text-secondary {
     color: #ccc;
 }
-.add-product-form, .profile-card, .center-popup, .register-form{
+
+.add-product-form,
+.profile-card,
+.center-popup,
+.register-form {
     border: $border-color 1px solid;
     padding: 20px;
     margin: 50px 0;
     border-radius: 5px;
-    h2{
+
+    h2 {
         font-weight: 500;
     }
-    label{
+
+    label {
         color: #ccc;
         font-size: 13px;
     }
-    input, textarea, select{
+
+    input,
+    textarea,
+    select {
         background-color: transparent;
         border: $border-color 1px solid;
         color: $primary-color;
     }
-    input:focus, textarea:focus, select:focus{
+
+    input:focus,
+    textarea:focus,
+    select:focus {
         outline: none;
         border-color: #00C9A7;
         background-color: transparent;
@@ -480,30 +510,35 @@ form{
     }
 
 }
-.register-form{
+
+.register-form {
     margin-top: 0;
 }
-.center-popup{
-    input{
+
+.center-popup {
+    input {
         padding: 5px;
         border-radius: 5px;
     }
 }
 
-option{
+option {
     background-color: #1F2933;
     color: #fff;
 }
+
 .custom-table {
     width: 100%;
     background-color: $bg-color;
     border: 1px solid $border-color;
     border-collapse: separate;
     border-radius: 10px;
-    .img-fluid{
+
+    .img-fluid {
         border-radius: 5px;
     }
-    .description-wrap{
+
+    .description-wrap {
         max-width: 300px;
     }
 }
@@ -517,32 +552,36 @@ option{
     color: $primary-color;
     font-size: 14px;
 }
-.custom-table th{
+
+.custom-table th {
     color: #ccc;
 }
 
 .custom-table td {
     font-weight: 400;
 }
-.profile-card{
+
+.profile-card {
     background-color: $bg-color;
     color: $primary-color;
     padding: 20px;
     border-radius: 8px;
     @include box-shadow-lg;
 }
-.card{
+
+.card {
     background-color: $bg-color;
     color: $primary-color;
     padding: 20px;
     border-radius: 8px;
     @include box-shadow-lg;
-    p{
+
+    p {
         color: $primary-color;
     }
 }
 
-.center-popup{
+.center-popup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -554,11 +593,12 @@ option{
     @include box-shadow-lg;
 }
 
-.feedback-container{
+.feedback-container {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-    .card{
+
+    .card {
         min-width: 400px;
     }
 }
@@ -575,20 +615,63 @@ option{
 .forgot-password:hover {
     color: $btn-primary-hover;
 }
-.nav-tabs{
+
+.nav-tabs {
     border-bottom: 1px solid $border-color;
-    li{
+
+    li {
         border: none;
     }
-    .nav-item{
-        .nav-link{
+
+    .nav-item {
+        .nav-link {
             border: 1px solid $border-color;
             color: #ccc;
             font-weight: 500;
-            &.active{
+
+            &.active {
                 color: $bg-color;
                 background-color: $secondary-color;
             }
+        }
+    }
+}
+
+.admin-nav-brand {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    line-height: 15px;
+    align-items: flex-end;
+}
+
+.admin-landing {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    .card {
+        padding: 10px;
+        width: 330px;
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        @include box-shadow-lg;
+        cursor: pointer;
+
+        .card-icon {
+            width: 100%;
+            display: grid;
+            place-items: center;
+        }
+
+        .card-icon i {
+            font-size: 6rem;
         }
     }
 }

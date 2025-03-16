@@ -1,11 +1,11 @@
-{% extends 'admin/admin_base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Review Brand Registrations{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h2>Review Brand Registrations</h2>
-    <table class="table table-bordered">
+    <h2 class="my-4 sub-title">Review Brand Registrations</h2>
+    <table class="table custom-table border-table">
         <thead>
             <tr>
                 <th>Brand Name</th>
@@ -25,8 +25,12 @@
                 <td>{{ brand.address }}</td>
                 <td>{{ brand.contact_info }}</td>
                 <td>
-                    <a href="{% url 'approve_brand' brand.id %}" class="btn btn-success btn-sm">Approve</a>
-                    <a href="{% url 'reject_brand' brand.id %}" class="btn btn-danger btn-sm">Reject</a>
+                    <a href="{% url 'approve_brand' brand.id %}" class="btn btn-success btn-sm">
+                        <i class="bi bi-check"></i>
+                    </a>
+                    <a href="{% url 'reject_brand' brand.id %}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-x"></i>
+                    </a>
                 </td>
             </tr>
             {% empty %}

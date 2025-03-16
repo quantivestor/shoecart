@@ -20,6 +20,10 @@ body {
   margin: 0 auto;
 }
 
+.text-success {
+  color: #43ffd3 !important;
+}
+
 .main-title {
   font-size: 28px;
   color: #fff;
@@ -406,25 +410,56 @@ select {
   color: #ccc;
 }
 
-.add-product-form, .profile-card, .center-popup, .register-form {
+.add-product-form,
+.profile-card,
+.center-popup,
+.register-form {
   border: #2A2F38 1px solid;
   padding: 20px;
   margin: 50px 0;
   border-radius: 5px;
 }
-.add-product-form h2, .profile-card h2, .center-popup h2, .register-form h2 {
+.add-product-form h2,
+.profile-card h2,
+.center-popup h2,
+.register-form h2 {
   font-weight: 500;
 }
-.add-product-form label, .profile-card label, .center-popup label, .register-form label {
+.add-product-form label,
+.profile-card label,
+.center-popup label,
+.register-form label {
   color: #ccc;
   font-size: 13px;
 }
-.add-product-form input, .add-product-form textarea, .add-product-form select, .profile-card input, .profile-card textarea, .profile-card select, .center-popup input, .center-popup textarea, .center-popup select, .register-form input, .register-form textarea, .register-form select {
+.add-product-form input,
+.add-product-form textarea,
+.add-product-form select,
+.profile-card input,
+.profile-card textarea,
+.profile-card select,
+.center-popup input,
+.center-popup textarea,
+.center-popup select,
+.register-form input,
+.register-form textarea,
+.register-form select {
   background-color: transparent;
   border: #2A2F38 1px solid;
   color: #fff;
 }
-.add-product-form input:focus, .add-product-form textarea:focus, .add-product-form select:focus, .profile-card input:focus, .profile-card textarea:focus, .profile-card select:focus, .center-popup input:focus, .center-popup textarea:focus, .center-popup select:focus, .register-form input:focus, .register-form textarea:focus, .register-form select:focus {
+.add-product-form input:focus,
+.add-product-form textarea:focus,
+.add-product-form select:focus,
+.profile-card input:focus,
+.profile-card textarea:focus,
+.profile-card select:focus,
+.center-popup input:focus,
+.center-popup textarea:focus,
+.center-popup select:focus,
+.register-form input:focus,
+.register-form textarea:focus,
+.register-form select:focus {
   outline: none;
   border-color: #00C9A7;
   background-color: transparent;
@@ -544,6 +579,42 @@ option {
 .nav-tabs .nav-item .nav-link.active {
   color: #161B22;
   background-color: #43ffd3;
+}
+
+.admin-nav-brand {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  line-height: 15px;
+  align-items: flex-end;
+}
+
+.admin-landing {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.admin-landing .card {
+  padding: 10px;
+  width: 330px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+.admin-landing .card .card-icon {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+.admin-landing .card .card-icon i {
+  font-size: 6rem;
 }
 
 /*# sourceMappingURL=styles.css.map */

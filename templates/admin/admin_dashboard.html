@@ -1,40 +1,82 @@
-{% extends 'admin/admin_base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="text-center mb-4">Admin Dashboard</h1>
+    <div class="admin-landing">
+        <!-- Manage Salons -->
+        <div class="card card-transition cursor-pointer" onclick="window.location.href='brand-list';">
+            <div class="card-icon">
+                <i class="bi bi-kanban text-success"></i>
+            </div>
 
-    <div class="row">
-        <!-- Manage brands -->
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Manage brands</h5>
-                    <p class="card-text">Add, Edit, or Remove brands</p>
-                    <a href="{% url 'list_brand_details' %}" class="btn btn-primary">Go to brands</a>
-                </div>
+            <div class="card-content text-center">
+                <h5 class="sub-text">Manage brands</h5>
+                <p class="card-text">
+                    <small>Add, Edit, and Remove brands</small>
+                </p>
             </div>
         </div>
 
         <!-- Manage Users -->
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Manage Users</h5>
-                    <p class="card-text">View and Manage Users</p>
-                    <a href="{% url 'list_customer_details' %}" class="btn btn-primary">Go to Users</a>
-                </div>
+        <div class="card card-transition cursor-pointer" onclick="window.location.href='customer-list';">
+            <div class="card-icon">
+                <i class="bi bi-people text-success"></i>
+            </div>
+
+            <div class="card-content text-center">
+                <h5 class="sub-text">Manage Users</h5>
+                <p class="card-text">
+                    <small>View and Manage Users</small>
+                </p>
             </div>
         </div>
 
-        <!-- Review brands -->
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Review brands</h5>
-                    <p class="card-text">Approve or Reject brands</p>
-                    <a href="{% url 'review_brand_registrations' %}" class="btn btn-warning">Review brands</a>
-                </div>
+        <div class="card card-transition cursor-pointer" onclick="window.location.href='review';">
+            <div class="card-icon">
+                <i class="bi bi-chat-square-text text-success"></i>
+            </div>
+
+            <div class="card-content text-center">
+                <h5 class="sub-text">Review Brands</h5>
+                <p class="card-text">
+                    <small>Approve or Reject Brands</small>
+                </p>
+            </div>
+        </div>
+        <div class="card card-transition cursor-pointer" onclick="window.location.href='review';">
+            <div class="card-icon">
+                <i class="bi bi-list-check text-success"></i>
+            </div>
+
+            <div class="card-content text-center">
+                <h5 class="sub-text">Manage Staffs</h5>
+                <p class="card-text">
+                    <small>View and Manage Staffs</small>
+                </p>
+            </div>
+        </div>
+        <div class="card card-transition cursor-pointer" onclick="window.location.href='review';">
+            <div class="card-icon">
+                <i class="bi bi-person-badge text-success"></i>
+            </div>
+
+            <div class="card-content text-center">
+                <h5 class="sub-text">Review Staffs</h5>
+                <p class="card-text">
+                    <small>Approve or Reject Staffs</small>
+                </p>
+            </div>
+        </div>
+        <div class="card card-transition cursor-pointer" onclick="window.location.href='review';">
+            <div class="card-icon">
+                <i class="bi bi-chat-left-text text-success"></i>
+            </div>
+
+            <div class="card-content text-center">
+                <h5 class="sub-text">Feedbacks</h5>
+                <p class="card-text">
+                    <small>Feedbacks</small>
+                </p>
             </div>
         </div>
     </div>
