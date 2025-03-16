@@ -47,7 +47,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField(default=1)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
-    color = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+    color = models.CharField(max_length=100, choices=COLOR_CHOICES)
     image = models.ImageField(upload_to='product_images/', null=True, blank=True)
     sizes = models.CharField(max_length=100, help_text='Comma-separated sizes, e.g., S,M,L,XL')
     offer_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
