@@ -56,6 +56,12 @@ body {
     font-weight: 400;
 }
 
+.sub-title-sm{
+    font-size: 16px;
+    color: $primary-color;
+    font-weight: 400;
+}
+
 .main-title-md {
     font-size: 24px;
     color: $primary-color;
@@ -105,6 +111,12 @@ input {
 
     }
 }
+.btn-primary-sm{
+    background-color: $btn-primary;
+    &:hover{
+        border: 1px solid $btn-primary-hover;
+    }
+}
 
 .navbar {
     @include box-shadow;
@@ -131,10 +143,10 @@ input {
 
 .nav-item {
     .nav-link {
-        color: $primary-color !important;
+        color: $primary-color;
 
         &:hover {
-            color: $secondary-color !important;
+            color: $secondary-color;
         }
 
         i {
@@ -429,4 +441,154 @@ form{
     color: $primary-color;
     padding: 20px;
     border-radius: 8px;
+}
+.order-status{
+   font-size: 14px;
+   font-weight: 500;
+}
+.order-card{
+    background-color: $bg-color;
+    color: $primary-color;
+    padding: 20px;
+    border-radius: 8px;
+}
+.text-secondary{
+    color: #ccc;
+}
+.add-product-form, .profile-card, .center-popup, .register-form{
+    border: $border-color 1px solid;
+    padding: 20px;
+    margin: 50px 0;
+    border-radius: 5px;
+    h2{
+        font-weight: 500;
+    }
+    label{
+        color: #ccc;
+        font-size: 13px;
+    }
+    input, textarea, select{
+        background-color: transparent;
+        border: $border-color 1px solid;
+        color: $primary-color;
+    }
+    input:focus, textarea:focus, select:focus{
+        outline: none;
+        border-color: #00C9A7;
+        background-color: transparent;
+        color: #fff;
+    }
+
+}
+.register-form{
+    margin-top: 0;
+}
+.center-popup{
+    input{
+        padding: 5px;
+        border-radius: 5px;
+    }
+}
+
+option{
+    background-color: #1F2933;
+    color: #fff;
+}
+.custom-table {
+    width: 100%;
+    background-color: $bg-color;
+    border: 1px solid $border-color;
+    border-collapse: separate;
+    border-radius: 10px;
+    .img-fluid{
+        border-radius: 5px;
+    }
+    .description-wrap{
+        max-width: 300px;
+    }
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 12px;
+    text-align: left;
+    font-weight: 500;
+    background-color: $bg-color;
+    color: $primary-color;
+    font-size: 14px;
+}
+.custom-table th{
+    color: #ccc;
+}
+
+.custom-table td {
+    font-weight: 400;
+}
+.profile-card{
+    background-color: $bg-color;
+    color: $primary-color;
+    padding: 20px;
+    border-radius: 8px;
+    @include box-shadow-lg;
+}
+.card{
+    background-color: $bg-color;
+    color: $primary-color;
+    padding: 20px;
+    border-radius: 8px;
+    @include box-shadow-lg;
+    p{
+        color: $primary-color;
+    }
+}
+
+.center-popup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $bg-color;
+    color: $primary-color;
+    padding: 20px;
+    border-radius: 8px;
+    @include box-shadow-lg;
+}
+
+.feedback-container{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    .card{
+        min-width: 400px;
+    }
+}
+
+.forgot-password {
+    display: inline-block;
+    margin-top: 10px;
+    color: $secondary-color;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: $btn-primary-hover;
+}
+.nav-tabs{
+    border-bottom: 1px solid $border-color;
+    li{
+        border: none;
+    }
+    .nav-item{
+        .nav-link{
+            border: 1px solid $border-color;
+            color: #ccc;
+            font-weight: 500;
+            &.active{
+                color: $bg-color;
+                background-color: $secondary-color;
+            }
+        }
+    }
 }

@@ -2,11 +2,11 @@
 
 {% block content %}
 <div class="container">
-    <div>
-        <h2>📋 Order List</h2>
+    <div class="my-4">
+        <h2 class="sub-title">📋 Order List</h2>
 
         {% if orders %}
-        <table>
+        <table class="table custom-table border-table">
             <thead>
                 <tr>
                     <th>Order ID</th>
@@ -28,7 +28,9 @@
                         {{ order.track_status }}
                     </td>
                     <td>
-                        <a href="{% url 'update_order_status' order.id %}" class="btn">Update Status</a>
+                        <a href="{% url 'update_order_status' order.id %}" class="btn btn-primary-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}

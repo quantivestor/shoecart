@@ -1,13 +1,15 @@
-{% extends 'brand/brand_base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 <div class="container">
-    <h2>Delete Product</h2>
-    <p>Are you sure you want to delete "{{ product.name }}"?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Yes, Delete</button>
-        <a href="{% url 'view_products' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+    <div class="center-popup">
+        <h2 class="sub-title">Delete Product</h2>
+        <p>Are you sure you want to delete "{{ product.name }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">Yes, Delete</button>
+            <a href="{% url 'view_products' %}" class="btn btn-secondary btn-sm">Cancel</a>
+        </form>
+    </div>
 </div>
 {% endblock %}

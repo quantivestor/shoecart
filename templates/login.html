@@ -35,19 +35,6 @@
         margin-top: 10px;
         font-size: 14px;
     }
-
-    .forgot-password {
-        display: block;
-        margin-top: 10px;
-        color: #43FFD3;
-        font-size: 14px;
-        text-decoration: none;
-        transition: color 0.3s;
-    }
-
-    .forgot-password:hover {
-        color: #00C9A7;
-    }
 </style>
 {% endblock %}
 
@@ -55,11 +42,6 @@
 <div class="container center-container">
     <div class="login-container">
         <h2 class="text-center main-title-md highlight-text mb-4">Login</h2>
-        {% if messages %}
-            {% for message in messages %}
-                <p class="error-message">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
         
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
@@ -73,6 +55,9 @@
             </div>
             <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
             <button type="submit" class="primary-btn w-100 my-4">Login</button>
+            <p>
+                Don't have an account? <a class="forgot-password" href="{% url 'user_register' %}">Sign Up</a>
+            </p>
         </form>
     
     </div>

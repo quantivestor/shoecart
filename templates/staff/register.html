@@ -3,16 +3,30 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Customer Registration</h2>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary w-100">Register</button>
-    </form>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link"  href="{% url 'user_register' %}">Register User</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'staff_register' %}">Register Staff</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'brand_register' %}">Register Brand</a>
+        </li>
+    </ul>
 
-    <p class="mt-3">
-        Already have an account? <a href="{% url 'login' %}">Login here</a>
-    </p>
+    <div class="register-form">
+        <h2 class="sub-title my-4">Staff Registration</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn primary-btn w-100">Register</button>
+        </form>
+
+        <p class="mt-3">
+            Already have an account? <a class="forgot-password" href="{% url 'login' %}">Login here</a>
+        </p>
+    </div>
 </div>
 {% endblock %}

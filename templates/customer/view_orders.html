@@ -1,46 +1,60 @@
-{% extends 'customer/user_base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h2>Your Orders</h2>
+<div class="container my-4">
+    <h2 class="sub-title mb-4">📦 Your Orders</h2>
 
     {% if orders %}
-        <ul class="list-group">
+        <div class="order-list">
             {% for order in orders %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ order.product.name }} - Ordered on {{ order.ordered_at|date:"Y-m-d" }}
-                    
-                    {% if order.is_delivered %}
-                        <span class="badge bg-success">Delivered</span>
-                        {% if order.feedback_rating %}
-                            <div class="rating">
-                                {% for star in "★★★★★"|slice:order.feedback_rating %}
-                                    <span style="color: #ffc107;">★</span>
-                                {% endfor %}
-                                {% for empty_star in "★★★★★"|slice:5|slice:":-order.feedback_rating" %}
-                                    <span style="color: #e4e5e9;">★</span>
-                                {% endfor %}
-                            </div>
+            <div class="card order-card shadow-sm p-3 mb-3">
+                <div class="row align-items-center">
+                    <!-- Product Image -->
+                    <div class="col-md-2 text-center">
+                        {% if order.product.image %}
+                            <img src="{{ order.product.image.url }}" class="img-fluid rounded" alt="{{ order.product.name }}">
                         {% else %}
-                            <a href="{% url 'add_feedback' order.product.id %}">Rate the product</a>
+                            <div class="no-image">No Image</div>
                         {% endif %}
-                    {% else %}
-                        <span class="badge bg-warning text-dark">Pending</span>
-                        <!-- Google Maps Link for Pending Orders
-                        <a 
-                            href="https://www.google.com/maps/search/?api=1&query={{ order.product.brand.point.y }},{{ order.product.brand.point.x }}" 
-                            target="_blank"
-                            class="btn btn-primary btn-sm ms-2"
-                        >
-                            📍 View on Map
-                        </a> -->
-                    {% endif %}
-                </li>
+                    </div>
+                    
+                    <!-- Order Details -->
+                    <div class="col-md-6">
+                        <h5 class="product-title">{{ order.product.name }}</h5>
+                        <p class="text-secondary">Ordered on: <strong>{{ order.ordered_at|date:"Y-m-d" }}</strong></p>
+                        <p class="text-secondary">Price: <strong>₹{{ order.product.discounted_price }}</strong></p>
+
+                        <!-- Order Status -->
+                        {% if order.is_delivered %}
+                            <span class="order-status">Delivered</span>
+                        {% else %}
+                            <span class="order-status">Order Status: <i>{{ order.track_status }}</i></span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Actions & Rating -->
+                    <div class="col-md-4 text-end">
+                        {% if order.is_delivered %}
+                            {% if order.feedback_rating %}
+                                <div class="rating">
+                                    {% for star in "★★★★★"|slice:order.feedback_rating %}
+                                        <span style="color: #ffc107;">★</span>
+                                    {% endfor %}
+                                    {% for empty_star in "★★★★★"|slice:5|slice:":-order.feedback_rating" %}
+                                        <span style="color: #e4e5e9;">★</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <a href="{% url 'add_feedback' order.product.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
-        <p>No orders found.</p>
+        <div class="alert alert-warning text-center">You have no orders yet.</div>
     {% endif %}
 </div>
 {% endblock %}
-

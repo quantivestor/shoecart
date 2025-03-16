@@ -2,72 +2,77 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="my-4">Update Product</h2>
-    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form method="post" enctype="multipart/form-data" class="add-product-form needs-validation" novalidate>
+        <h2 class="my-4 sub-title">UPDATE PRODUCT</h2>
         {% csrf_token %}
-        
-        <!-- Brand Field -->
+
         <div class="mb-3">
-            <label for="{{ form.brand.id_for_label }}" class="form-label">Brand</label>
             {{ form.brand }}
             <div class="invalid-feedback">
                 Please select a brand.
             </div>
         </div>
 
-        <!-- Name Field -->
-        <div class="mb-3">
-            <label for="{{ form.name.id_for_label }}" class="form-label">Product Name</label>
-            {{ form.name }}
-            <div class="invalid-feedback">
-                Please provide a product name.
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">Product Name</label>
+                        {{ form.name }}
+                        <div class="invalid-feedback">
+                            Please provide a product name.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+                        {{ form.category }}
+                        <div class="invalid-feedback">
+                            Please select a category.
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="{{ form.color.id_for_label }}" class="form-label">Product Color</label>
+                        {{ form.color }}
+                        <div class="invalid-feedback">
+                            Please provide a color.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                    {{ form.description }}
+                    <div class="invalid-feedback">
+                        Please provide a description.
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Description Field -->
-        <div class="mb-3">
-            <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
-            {{ form.description }}
-            <div class="invalid-feedback">
-                Please provide a description.
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="{{ form.price.id_for_label }}" class="form-label">Price</label>
+                {{ form.price }}
+                <div class="invalid-feedback">
+                    Please provide a valid price.
+                </div>
+            </div>
+
+            <!-- Offer Percentage Field -->
+            <div class="col-md-6">
+                <label for="{{ form.offer_percentage.id_for_label }}" class="form-label">Offer Percentage (%)</label>
+                {{ form.offer_percentage }}
+                <div class="invalid-feedback">
+                    Please provide a valid offer percentage (if applicable).
+                </div>
             </div>
         </div>
 
-        <!-- Price Field -->
-        <div class="mb-3">
-            <label for="{{ form.price.id_for_label }}" class="form-label">Price</label>
-            {{ form.price }}
-            <div class="invalid-feedback">
-                Please provide a valid price.
-            </div>
-        </div>
 
-        <!-- Offer Percentage Field -->
-        <div class="mb-3">
-            <label for="{{ form.offer_percentage.id_for_label }}" class="form-label">Offer Percentage (%)</label>
-            {{ form.offer_percentage }}
-            <div class="invalid-feedback">
-                Please provide a valid offer percentage (if applicable).
-            </div>
-        </div>
 
-        <!-- Stock Field -->
-        <!-- <div class="mb-3">
-            <label for="{{ form.stock.id_for_label }}" class="form-label">Available Stock Count</label>
-            {{ form.stock }}
-            <div class="invalid-feedback">
-                Please provide the stock quantity.
-            </div>
-        </div> -->
-
-        <!-- Category Field -->
-        <div class="mb-3">
-            <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
-            {{ form.category }}
-            <div class="invalid-feedback">
-                Please select a category.
-            </div>
-        </div>
 
         <!-- Sizes Field -->
         <div class="mb-3">
@@ -86,8 +91,7 @@
                 Please upload a product image.
             </div>
         </div>
-
-        <button type="submit" class="btn btn-primary">Update Product</button>
+        <button type="submit" class="mt-4  primary-btn w-100">Update Product</button>
     </form>
 </div>
 {% endblock %}

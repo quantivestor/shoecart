@@ -32,6 +32,12 @@ body {
   font-weight: 400;
 }
 
+.sub-title-sm {
+  font-size: 16px;
+  color: #fff;
+  font-weight: 400;
+}
+
 .main-title-md {
   font-size: 24px;
   color: #fff;
@@ -80,6 +86,13 @@ input {
   background-color: #009E85;
 }
 
+.btn-primary-sm {
+  background-color: #00C9A7;
+}
+.btn-primary-sm:hover {
+  border: 1px solid #009E85;
+}
+
 .navbar {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   padding: 5px 5%;
@@ -104,10 +117,10 @@ input {
 }
 
 .nav-item .nav-link {
-  color: #fff !important;
+  color: #fff;
 }
 .nav-item .nav-link:hover {
-  color: #43ffd3 !important;
+  color: #43ffd3;
 }
 .nav-item .nav-link i {
   font-size: 20px;
@@ -375,6 +388,162 @@ select {
   color: #fff;
   padding: 20px;
   border-radius: 8px;
+}
+
+.order-status {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.order-card {
+  background-color: #161B22;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.text-secondary {
+  color: #ccc;
+}
+
+.add-product-form, .profile-card, .center-popup, .register-form {
+  border: #2A2F38 1px solid;
+  padding: 20px;
+  margin: 50px 0;
+  border-radius: 5px;
+}
+.add-product-form h2, .profile-card h2, .center-popup h2, .register-form h2 {
+  font-weight: 500;
+}
+.add-product-form label, .profile-card label, .center-popup label, .register-form label {
+  color: #ccc;
+  font-size: 13px;
+}
+.add-product-form input, .add-product-form textarea, .add-product-form select, .profile-card input, .profile-card textarea, .profile-card select, .center-popup input, .center-popup textarea, .center-popup select, .register-form input, .register-form textarea, .register-form select {
+  background-color: transparent;
+  border: #2A2F38 1px solid;
+  color: #fff;
+}
+.add-product-form input:focus, .add-product-form textarea:focus, .add-product-form select:focus, .profile-card input:focus, .profile-card textarea:focus, .profile-card select:focus, .center-popup input:focus, .center-popup textarea:focus, .center-popup select:focus, .register-form input:focus, .register-form textarea:focus, .register-form select:focus {
+  outline: none;
+  border-color: #00C9A7;
+  background-color: transparent;
+  color: #fff;
+}
+
+.register-form {
+  margin-top: 0;
+}
+
+.center-popup input {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+option {
+  background-color: #1F2933;
+  color: #fff;
+}
+
+.custom-table {
+  width: 100%;
+  background-color: #161B22;
+  border: 1px solid #2A2F38;
+  border-collapse: separate;
+  border-radius: 10px;
+}
+.custom-table .img-fluid {
+  border-radius: 5px;
+}
+.custom-table .description-wrap {
+  max-width: 300px;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 12px;
+  text-align: left;
+  font-weight: 500;
+  background-color: #161B22;
+  color: #fff;
+  font-size: 14px;
+}
+
+.custom-table th {
+  color: #ccc;
+}
+
+.custom-table td {
+  font-weight: 400;
+}
+
+.profile-card {
+  background-color: #161B22;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.card {
+  background-color: #161B22;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.card p {
+  color: #fff;
+}
+
+.center-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #161B22;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.feedback-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.feedback-container .card {
+  min-width: 400px;
+}
+
+.forgot-password {
+  display: inline-block;
+  margin-top: 10px;
+  color: #43ffd3;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.forgot-password:hover {
+  color: #009E85;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #2A2F38;
+}
+.nav-tabs li {
+  border: none;
+}
+.nav-tabs .nav-item .nav-link {
+  border: 1px solid #2A2F38;
+  color: #ccc;
+  font-weight: 500;
+}
+.nav-tabs .nav-item .nav-link.active {
+  color: #161B22;
+  background-color: #43ffd3;
 }
 
 /*# sourceMappingURL=styles.css.map */

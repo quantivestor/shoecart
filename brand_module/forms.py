@@ -14,7 +14,7 @@ class ProductForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             if field_name == 'description':
-                field.widget.attrs['rows'] = 3  # Set rows for the description textarea
+                field.widget.attrs['rows'] = 5  # Set rows for the description textarea
             if field_name == 'price':
                 field.widget.attrs['step'] = '0.01'  # Allow decimal values for price
 

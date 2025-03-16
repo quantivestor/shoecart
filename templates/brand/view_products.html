@@ -1,9 +1,14 @@
-{% extends 'brand/brand_base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 <div class="container">
-    <h2>Product List</h2>
-    <table class="table table-striped">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2 class="sub-title ">Product List</h2>
+        <a href="{% url 'add_product' %}" class="btn btn-primary-sm">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+    </div>
+    <table class="table custom-table border-table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -22,24 +27,33 @@
                 <td>{{ product.name }}</td>
                 <td>
                     {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" width="80" height="80">
+                        <img class="img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}" width="80" height="80">
                     {% else %}
                         No Image
                     {% endif %}
                 </td>
-                <td>{{ product.description }}</td>
+                <td>
+                    <div class="description-wrap">
+                        {{ product.description }}
+                    </div>
+                </td>
                 <td>{{ product.category }}</td>
                 <td>${{ product.price }}</td>
-                <td>${{ product.offer_percentage }}</td>
-                <td>${{ product.sizes }}</td>
-                <td>
-                    <a href="{% url 'update_product' product.id %}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm">Delete</a>
+                <td>{{ product.offer_percentage }}%</td>
+                <td>{{ product.sizes }}</td>
+                <td >
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'update_product' product.id %}" class="btn btn-primary-sm btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'add_product' %}" class="btn btn-success">Add New Product</a>
 </div>
 {% endblock %}
