@@ -4,9 +4,7 @@
         <form id="searchForm" method="GET" action="{% url 'home' %}#productList">
             <input type="text" name="product_name" placeholder="Search for products..."
                 value="{{ request.GET.product_name }}" />
-            <input type="hidden" id="latitude" name="latitude">
-            <input type="hidden" id="longitude" name="longitude">
-            <button class="primary-btn" type="button" onclick="getLocationAndSearch()">
+            <button class="primary-btn" type="submit">
                 <i class="bi bi-search"></i>
             </button>
         </form>
@@ -27,7 +25,7 @@
             </button>
         </div>
         <div class="offcanvas-body">
-            <form id="filterForm" method="GET" action="{% url 'user_home' %}">
+            <form id="filterForm" method="GET" action="{% url 'home' %}">
                 <div>
                     <label>Category:</label>
                     <select name="category">
@@ -67,40 +65,43 @@
     <div class="product-list">
         {% for product in products %}
         <div class="product-card">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            {% else %}
-            No Image
-            {% endif %}
-            <h3>{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
+            <div class="top-section">
+                <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="size" id="selected-size-{{ product.id }}">
+                    <button type="submit" class="primary-btn W-100 mt-3">
+                        <i class="bi bi-cart-plus"></i>
+                    </button>
+                </form>
+                {% if product.image %}
+                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <div class="product-name">
+                    <h3>{{ product.name }}</h3>
+                    <p class="brand">{{ product.brand.brand_name }}</p>
+                </div>
+                <div class="pricing">
+                    {% if product.offer_percentage %}
+                    <p class="original-price"><del>₹{{ product.price }}</del></p>
+                    <p class="discounted-price">₹{{ product.discounted_price }}</p>
+                    <p class="offer-percentage">{{ product.offer_percentage }}% OFF</p>
+                    {% else %}
+                    <p class="product-price">₹{{ product.price }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <p class="product-description">{{ product.description }}</p>
             <!-- Sizes Dropdown -->
             {% if product.sizes %}
-            <label for="size-{{ product.id }}">Select Size:</label>
+            <label class="size-label" for="size-{{ product.id }}">Select Size:</label>
             <select id="size-{{ product.id }}" name="size">
                 {% for size in product.get_size_list %}
                 <option value="{{ size }}">{{ size }}</option>
                 {% endfor %}
             </select>
             {% endif %}
-            <!-- Pricing Section -->
-            <div class="pricing">
-                {% if product.offer_percentage %}
-                <p class="original-price"><del>₹{{ product.price }}</del></p>
-                <p class="discounted-price">₹{{ product.discounted_price }}</p>
-                <p class="offer-percentage">{{ product.offer_percentage }}% OFF</p>
-                {% else %}
-                <p class="product-price">₹{{ product.price }}</p>
-                {% endif %}
-            </div>
-            <!-- <p class="product-quantity">Available Quantity: {{ product.stock }}</p> -->
-            <p>Brand: {{ product.brand.brand_name }}</p>
-            <!-- Add to Cart Button with Size Selection -->
-            <form action="{% url 'add_to_cart' product.id %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="size" id="selected-size-{{ product.id }}">
-                <button type="submit" class="add-to-cart">Add to Cart</button>
-            </form>
         </div>
         {% empty %}
         <p>No products found matching your search.</p>
@@ -143,19 +144,6 @@
             }, 300);
         }
     }
-    function getLocationAndSearch() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    document.getElementById('latitude').value = position.coords.latitude;
-                    document.getElementById('longitude').value = position.coords.longitude;
-                    document.getElementById('searchForm').submit();
-                }, function(error) {
-                    alert("Location access denied. Please enable location services.");
-                });
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
 
 </script>
 <script>
