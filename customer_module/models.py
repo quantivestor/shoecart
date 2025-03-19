@@ -60,6 +60,12 @@ class Order(models.Model):
     )
     is_delivered = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        if self.is_delivered and self.status == "Pending":
+            self.track_status = "Delivered"
+            self.status = "Delivered"  # Optionally update order status too
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Order by {self.user.user.username} for {self.product.name}"
 
@@ -72,7 +78,7 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(
         max_length=10,
-        choices=[("Pending", "Pending"), ("Completed", "Completed")],
+        choices=[("Pending", "Pending"), ("Completed", "Completed"), ("Refunded", "Refunded")],
         default="Pending",
     )
     card_number = models.IntegerField(null=False, blank=False)

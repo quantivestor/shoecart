@@ -11,8 +11,8 @@
                 <div class="row align-items-center">
                     <!-- Product Image -->
                     <div class="col-md-2 text-center">
-                        {% if order.product.image %}
-                            <img src="{{ order.product.image.url }}" class="img-fluid rounded" alt="{{ order.product.name }}">
+                        {% if order.product.straight_image %}
+                            <img src="{{ order.product.straight_image.url }}" class="img-fluid rounded" alt="{{ order.product.name }}">
                         {% else %}
                             <div class="no-image">No Image</div>
                         {% endif %}
@@ -26,7 +26,7 @@
 
                         <!-- Order Status -->
                         {% if order.is_delivered %}
-                            <span class="order-status">Delivered</span>
+                            <span class="order-status">{{order.status}}</span>
                         {% else %}
                             <span class="order-status">Order Status: <i>{{ order.track_status }}</i></span>
                         {% endif %}
@@ -46,6 +46,24 @@
                                 </div>
                             {% else %}
                                 <a href="{% url 'add_feedback' order.product.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>
+
+                                {% if order.status != "Cancelled" %}
+                                    <form method="POST" action="{% url 'cancel_order' order.id %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm delete-btn" onclick="return confirm('Are you sure you want to return this order? You will receive ₹{{ order.total_amount }}.')">
+                                            ❌ Return
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if order.status == "Pending" %}
+                                <form method="POST" action="{% url 'cancel_order' order.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm delete-btn" onclick="return confirm('Are you sure you want to cancel this order? You will receive ₹{{ order.total_amount }}.')">
+                                        ❌ Cancel Order
+                                    </button>
+                                </form>
                             {% endif %}
                         {% endif %}
                     </div>

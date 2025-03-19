@@ -18,5 +18,6 @@ urlpatterns = [
         views.mark_order_delivered,
         name="mark_order_delivered",
     ),
+    path("cancel-order/<int:order_id>/", views.cancel_order, name="cancel_order"),
     path("add-feedback/<int:product_id>/", views.add_feedback, name="add_feedback"),
 ]

@@ -115,84 +115,122 @@ def place_order(request):
             messages.error(request, "Please select at least one item to proceed.")
             return redirect("view_cart")
 
-        with transaction.atomic():
-            for item_id in selected_items:
-                item = Cart.objects.get(id=item_id)
-                quantity = int(request.POST.get(f"quantity_{item_id}", 1))
+        # with transaction.atomic():
+        for item_id in selected_items:
+            item = Cart.objects.get(id=item_id)
+            quantity = int(request.POST.get(f"quantity_{item_id}", 1))
 
-                # Stock Check
-                if item.product.stock < quantity:
-                    messages.error(
-                        request, f"Insufficient stock for {item.product.name}."
-                    )
-                    continue
-
-                # Reduce stock
-                item.product.stock -= quantity
-                item.product.save()
-
-                # Create Order Entry
-                order = Order.objects.create(
-                    user=request.user.customer,
-                    product=item.product,
-                    quantity=quantity,
-                    size=item.size,
-                    total_amount=item.product.discounted_price * quantity,
-                    delivery_address=delivery_address,
+            # Stock Check
+            if item.product.stock < quantity:
+                messages.error(
+                    request, f"Insufficient stock for {item.product.name}."
                 )
+                continue
 
-                # Save Advance Payment Transaction
-                Transaction.objects.create(
-                    order=order,
-                    payment_id=f"ADV-{order.id}",
-                    amount=item.product.discounted_price * quantity,
-                    status="Completed",
-                    card_number=card_number,
-                    card_expiry=card_expiry,
-                    card_cvv=card_cvv,
+            # Reduce stock
+            item.product.stock -= quantity
+            item.product.save()
+
+            # Create Order Entry
+            order = Order.objects.create(
+                user=request.user.customer,
+                product=item.product,
+                quantity=quantity,
+                size=item.size,
+                total_amount=item.product.discounted_price * quantity,
+                delivery_address=delivery_address,
+            )
+
+            # Save Advance Payment Transaction
+            Transaction.objects.create(
+                order=order,
+                payment_id=f"ADV-{order.id}",
+                amount=item.product.discounted_price * quantity,
+                status="Completed",
+                card_number=card_number,
+                card_expiry=card_expiry,
+                card_cvv=card_cvv,
+            )
+
+            # Remove item from cart
+            item.delete()
+
+            # Email content setup
+            subject = f"Invoice for Your Order #{order.id}"
+            context = {
+                "order": order,
+                "customer_name": order.user.user.username,
+                "product_name": order.product.name,
+                "price": order.product.discounted_price,
+                "quantity": order.quantity,
+                "total_price": order.product.discounted_price * order.quantity,
+                "order_date": order.ordered_at,
+            }
+
+            # Load and render the email template
+            html_message = render_to_string("brand/invoice_email.html", context)
+            plain_message = strip_tags(
+                html_message
+            )  # Fallback for clients that don't support HTML
+            recipient_email = order.user.user.email
+
+            # Send email
+            try:
+                send_mail(
+                    subject,
+                    plain_message,
+                    EMAIL_HOST_USER,  # Sender's email
+                    [recipient_email],
+                    html_message=html_message,
                 )
-
-                # Remove item from cart
-                item.delete()
-
-                # Email content setup
-                subject = f"Invoice for Your Order #{order.id}"
-                context = {
-                    "order": order,
-                    "customer_name": order.user.user.username,
-                    "product_name": order.product.name,
-                    "price": order.product.discounted_price,
-                    "quantity": order.quantity,
-                    "total_price": order.product.discounted_price * order.quantity,
-                    "order_date": order.ordered_at,
-                }
-
-                # Load and render the email template
-                html_message = render_to_string("brand/invoice_email.html", context)
-                plain_message = strip_tags(
-                    html_message
-                )  # Fallback for clients that don't support HTML
-                recipient_email = order.user.user.email
-
-                # Send email
-                try:
-                    send_mail(
-                        subject,
-                        plain_message,
-                        EMAIL_HOST_USER,  # Sender's email
-                        [recipient_email],
-                        html_message=html_message,
-                    )
-                    messages.success(
-                        request, "Order approved and invoice sent successfully!"
-                    )
-                except Exception as e:
-                    messages.error(request, f"Order approved, but email failed: {e}")
+                messages.success(
+                    request, "Order approved and invoice sent successfully!"
+                )
+            except Exception as e:
+                messages.error(request, f"Order approved, but email failed: {e}")
 
         messages.success(request, "Order placed successfully!")
         return redirect("view_orders")
 
     return redirect("view_cart")
+
+@login_required
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user.customer)
+
+    # if order.status == "Delivered":
+    #     messages.error(request, "You cannot cancel a delivered order.")
+    #     return redirect("view_orders")
+
+    # Restock product
+    order.product.stock += order.quantity
+    order.product.save()
+
+    # Update order status to 'Cancelled'
+    order.status = "Cancelled"
+    order.track_status = "Cancelled"
+    order.save()
+
+    transaction = Transaction.objects.get(order=order)
+    transaction.status = "Refunded"
+    transaction.save()
+
+    send_mail(
+        "Order Cancelled & Refund Issued",
+        f"Dear {order.user.user.username},\n\n"
+        f"Your order for {order.product.name} has been cancelled.\n"
+        f"A refund of ₹{order.total_amount} has been processed.\n\n"
+        "Thank you for shopping with us!",
+        EMAIL_HOST_USER,
+        [order.user.user.email],
+        fail_silently=False,
+    )
+
+    messages.success(
+        request,
+        f"Order cancelled. ₹{order.total_amount:.2f} has been refunded.",
+    )
+    return redirect("view_orders")
 
 
 # View Orders
