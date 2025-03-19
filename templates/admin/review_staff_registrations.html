@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Review Staff Registrations{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4 sub-title">Review Staff Registrations</h2>
+    <table class="table custom-table border-table">
+        <thead>
+            <tr>
+                <th>Staff Name</th>
+                <th>Email</th>
+                <th>Contact Info</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staff in pending_staffs %}
+            <tr>
+                <td>{{ staff.user.username }}</td>
+                <td>{{ staff.user.email }}</td>
+                <td>{{ staff.phone_number }}</td>
+                <td>
+                    <a href="{% url 'approve_staff' staff.id %}" class="btn btn-success btn-sm">
+                        <i class="bi bi-check"></i>
+                    </a>
+                    <a href="{% url 'reject_staff' staff.id %}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-x"></i>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No pending staff registrations.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

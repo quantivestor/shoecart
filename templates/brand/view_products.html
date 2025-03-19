@@ -26,8 +26,8 @@
             <tr>
                 <td>{{ product.name }}</td>
                 <td>
-                    {% if product.image %}
-                        <img class="img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}" width="80" height="80">
+                    {% if product.straight_image %}
+                        <img class="img-fluid" src="{{ product.straight_image.url }}" alt="{{ product.name }}" width="80" height="80">
                     {% else %}
                         No Image
                     {% endif %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-3 pb-2 font-weight-bold">Confirm Your Order</h2>
+
+    <form method="POST" action="{% url 'place_order' %}">
+        {% csrf_token %}
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in selected_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.product.price }}</td>
+                    <td>₹{{ item.total_price }}</td>
+                </tr>
+                <input type="hidden" name="selected_items" value="{{ item.id }}">
+                <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Address Section -->
+        <div class="mb-3">
+            <label for="address" class="form-label">Delivery Address</label>
+            <textarea class="form-control" id="address" name="address" rows="3" required placeholder="Enter your delivery address"></textarea>
+        </div>
+
+        <!-- Card Details Section -->
+        <h5 class="mt-4">Payment Details</h5>
+        <div class="mb-3">
+            <label for="card_number" class="form-label">Card Number</label>
+            <input type="text" class="form-control" id="card_number" name="card_number" pattern="\d{16}" maxlength="16" required placeholder="Enter 16-digit card number">
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="expiry_date" class="form-label">Expiry Date</label>
+                <input type="text" class="form-control" id="expiry_date" name="expiry_date" pattern="\d{2}/\d{2}" maxlength="5" required placeholder="MM/YY">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="cvv" class="form-label">CVV</label>
+                <input type="password" class="form-control" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required placeholder="3-digit CVV">
+            </div>
+        </div>
+
+        <div class="text-right mt-3">
+            <h4>Total Amount: ₹{{ total_amount }}</h4>
+            <button type="submit" class="btn btn-success">Confirm & Pay</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

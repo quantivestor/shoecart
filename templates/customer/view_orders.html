@@ -40,9 +40,9 @@
                                     {% for star in "★★★★★"|slice:order.feedback_rating %}
                                         <span style="color: #ffc107;">★</span>
                                     {% endfor %}
-                                    {% for empty_star in "★★★★★"|slice:5|slice:":-order.feedback_rating" %}
+                                    <!-- {% for empty_star in "★★★★★"|slice:5|slice:":-order.feedback_rating" %}
                                         <span style="color: #e4e5e9;">★</span>
-                                    {% endfor %}
+                                    {% endfor %} -->
                                 </div>
                             {% else %}
                                 <a href="{% url 'add_feedback' order.product.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>

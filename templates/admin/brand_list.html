@@ -21,8 +21,8 @@
             {% for brand in brands %}
             <tr>
                 <td>{{ brand.brand_name }}</td>
-                <td>{{ brand.owner_name }}</td>
-                <td>{{ brand.email }}</td>
+                <td>{{ brand.user.username }}</td>
+                <td>{{ brand.user.email }}</td>
                 <td>{{ brand.address }}</td>
                 <td>{{ brand.contact_info }}</td>
                 <td>{{ brand.approval_status }}</td>

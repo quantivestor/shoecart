@@ -26,6 +26,19 @@
         </div>
         <div class="offcanvas-body">
             <form id="filterForm" method="GET" action="{% url 'home' %}">
+
+                <div>
+                    <label>Brand:</label>
+                    <select name="brand">
+                        <option value="">All Brands</option>
+                        {% for brand in brands %}
+                        <option value="{{ brand }}" {% if request.GET.brand == brand %}selected{% endif %}>
+                            {{ brand }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <div>
                     <label>Category:</label>
                     <select name="category">
@@ -33,6 +46,30 @@
                         {% for category in categories %}
                         <option value="{{ category }}" {% if request.GET.catagory == category %}selected{% endif %}>
                             {{ category }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label>Material:</label>
+                    <select name="material">
+                        <option value="">All Materials</option>
+                        {% for material in materials %}
+                        <option value="{{ material }}" {% if request.GET.material == material %}selected{% endif %}>
+                            {{ material }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label>Color>
+                    <select name="color">
+                        <option value="">All Colors</option>
+                        {% for color in colors %}
+                        <option value="{{ color }}" {% if request.GET.color == color %}selected{% endif %}>
+                            {{ color }}
                         </option>
                         {% endfor %}
                     </select>
@@ -73,8 +110,8 @@
                         <i class="bi bi-cart-plus"></i>
                     </button>
                 </form>
-                {% if product.image %}
-                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% if product.straight_image %}
+                    <img class="product-image" src="{{ product.straight_image.url }}" alt="{{ product.name }}">
                 {% endif %}
             </div>
             <div class="product-info">

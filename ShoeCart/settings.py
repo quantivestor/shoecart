@@ -82,11 +82,15 @@ WSGI_APPLICATION = "ShoeCart.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+        'OPTIONS': {
+            'timeout': 20,  # Increase timeout (default is 5 seconds)
+        }
     }
 }
+
 
 
 # Password validation
@@ -113,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Kolkata"
 
 USE_I18N = True
 

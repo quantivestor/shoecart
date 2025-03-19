@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4 sub-title">Feedbacks</h2>
+    <div class="feedback-container">
+        {% for feedback in feedbacks %}
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="sub-title-sm">Feedback for <strong class="highlight-text">{{ feedback.product.name }}</strong></h5>
+                <p class="card-text">{{ feedback.comment }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-secondary">Rated: {{ feedback.rating }}/5</small>
+                    <small class="text-secondary">By: {{ feedback.customer.user.username }}</small>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                No feedbacks available.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
