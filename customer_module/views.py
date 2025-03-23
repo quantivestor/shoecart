@@ -8,6 +8,7 @@ from django.db.models import OuterRef, Subquery
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.db.models import Avg, Count
 
 from brand_module.models import Product
 from ShoeCart.settings import EMAIL_HOST_USER
@@ -23,7 +24,7 @@ def add_to_cart(request, product_id):
 
     if not size:
         messages.error(request, "Please select a size before adding to cart.")
-        return redirect("user_home")
+        return redirect("product_list")
 
     # Create or update cart item
     cart_item, created = Cart.objects.get_or_create(
@@ -37,7 +38,7 @@ def add_to_cart(request, product_id):
         cart_item.save()
 
     messages.success(request, f"{product.name} has been added to your cart.")
-    return redirect("user_home")
+    return redirect("product_list")
 
 
 # View Cart
@@ -272,7 +273,13 @@ def user_register(request):
             user.save()
 
             # Create Customer Profile
-            Customer.objects.create(user=user)
+            Customer.objects.create(
+                user=user,
+                phone_number=form.cleaned_data["phone_number"],
+                left_image=form.cleaned_data["left_image"],  # Correct way to retrieve image
+                straight_image=form.cleaned_data["straight_image"],
+                right_image=form.cleaned_data["right_image"],
+            )
 
             messages.success(request, "Registration successful. Please log in.")
             return redirect("login")
@@ -380,4 +387,76 @@ def add_feedback(request, product_id):
 
     return render(
         request, "customer/add_feedback.html", {"form": form, "product": product}
+    )
+
+@login_required(login_url="login")
+def product_list(request):
+    product_name = request.GET.get("product_name", "").strip()
+    category = request.GET.get("category", "").strip()
+    color = request.GET.get("color", "").strip()
+    material = request.GET.get("material", "").strip()
+    min_price = request.GET.get("min_price")
+    max_price = request.GET.get("max_price")
+    in_stock = request.GET.get("in_stock")
+    brand_name = request.GET.get("brand_name", "").strip()
+
+    products = Product.objects.all().annotate(
+        avg_rating=Avg('feedback__rating'),  # Average rating
+        review_count=Count('feedback')  # Count total reviews
+    )
+
+    # Fetch distinct values for filtering
+    categories = Product.objects.values_list("category", flat=True).distinct()
+    colors = Product.objects.values_list("color", flat=True).distinct()
+    materials = Product.objects.values_list("material", flat=True).distinct()
+    brands = Product.objects.values_list("brand__brand_name", flat=True).distinct()  # Corrected
+
+    # Apply Filters
+    if product_name:
+        products = products.filter(name__icontains=product_name)
+
+    if category:
+        products = products.filter(category__iexact=category)
+
+    if material:
+        products = products.filter(material__iexact=material)
+
+    if color:
+        products = products.filter(color__iexact=color)
+
+    if min_price:
+        try:
+            min_price = float(min_price)
+            products = products.filter(price__gte=min_price)
+        except ValueError:
+            pass  # Ignore invalid price values
+
+    if max_price:
+        try:
+            max_price = float(max_price)
+            products = products.filter(price__lte=max_price)
+        except ValueError:
+            pass
+
+    if in_stock:
+        products = products.filter(stock__gt=0)
+
+    if brand_name:
+        products = products.filter(brand__name__iexact=brand_name)  # Fixed
+
+    # Pagination
+    paginator = Paginator(products, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(
+        request,
+        "customer/product_list.html",
+        {
+            "products": page_obj,
+            "categories": categories,
+            "colors": colors,
+            "materials": materials,
+            "brands": brands,
+        },
     )

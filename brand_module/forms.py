@@ -47,7 +47,7 @@ class ProductForm(forms.ModelForm):
 
 class brandRegistrationForm(forms.Form):
     email = forms.EmailField()  # Add this field
-    username = forms.CharField(max_length=150)
+    username = forms.CharField(max_length=150, label="Owner Name", help_text="Enter the owner's full name")
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput())
     brand_name = forms.CharField(max_length=100)

@@ -214,7 +214,7 @@ def userlogin(request):
                     # Store salon_id in session
                     request.session["customer_id"] = customer.id
 
-                    return redirect("user_home")  # Redirect to the customer dashboard
+                    return redirect("product_list")  # Redirect to the customer dashboard
                 elif user.is_staff:
                     login(request, user)  # Log in the staff member
                     return redirect("admin_dashboard")

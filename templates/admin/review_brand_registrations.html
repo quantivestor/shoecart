@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Brand Name</th>
-                <th>Owner Name</th>
+                <!-- <th>Owner Name</th> -->
                 <th>Email</th>
                 <th>Address</th>
                 <th>Contact Info</th>
@@ -20,8 +20,8 @@
             {% for brand in pending_brands %}
             <tr>
                 <td>{{ brand.brand_name }}</td>
-                <td>{{ brand.owner_name }}</td>
-                <td>{{ brand.email }}</td>
+                <!-- <td>{{ brand.owner_name }}</td> -->
+                <td>{{ brand.user.email }}</td>
                 <td>{{ brand.address }}</td>
                 <td>{{ brand.contact_info }}</td>
                 <td>

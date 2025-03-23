@@ -46,7 +46,7 @@ def staff_register(request):
             user.save()
 
             # Create Customer Profile
-            Staff.objects.create(user=user)
+            Staff.objects.create(user=user, phone_number=form.cleaned_data["phone_number"])
 
             messages.success(request, "Registration successful. Please log in.")
             return redirect("login")

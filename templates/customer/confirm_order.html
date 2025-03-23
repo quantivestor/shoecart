@@ -39,16 +39,20 @@
         <h5 class="mt-4">Payment Details</h5>
         <div class="mb-3">
             <label for="card_number" class="form-label">Card Number</label>
-            <input type="text" class="form-control" id="card_number" name="card_number" pattern="\d{16}" maxlength="16" required placeholder="Enter 16-digit card number">
+            <input type="text" class="form-control" id="card_number" name="card_number" pattern="\d{16}" maxlength="16"
+                required placeholder="Enter 16-digit card number">
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="expiry_date" class="form-label">Expiry Date</label>
-                <input type="text" class="form-control" id="expiry_date" name="expiry_date" pattern="\d{2}/\d{2}" maxlength="5" required placeholder="MM/YY">
+                <input type="text" class="form-control" id="expiry_date" name="expiry_date" maxlength="5" required
+                    placeholder="MM/YY">
+                <small class="text-danger" id="expiry_error"></small>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="cvv" class="form-label">CVV</label>
-                <input type="password" class="form-control" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required placeholder="3-digit CVV">
+                <input type="password" class="form-control" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required
+                    placeholder="3-digit CVV">
             </div>
         </div>
 
@@ -58,5 +62,27 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.getElementById("expiry_date").addEventListener("input", function() {
+        let expiryInput = this.value;
+        let errorElement = document.getElementById("expiry_error");
+        errorElement.textContent = ""; // Clear previous error
+    
+        let regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+        if (!regex.test(expiryInput)) {
+            errorElement.textContent = "Invalid format. Use MM/YY";
+            return;
+        }
+    
+        let [month, year] = expiryInput.split("/").map(num => parseInt(num, 10));
+        let currentYear = new Date().getFullYear() % 100; // Get last two digits of the year
+        let currentMonth = new Date().getMonth() + 1; // Months are 0-based in JS
+    
+        if (year < currentYear || (year === currentYear && month < currentMonth)) {
+            errorElement.textContent = "Card expired.";
+        }
+    });
+    </script>
 
 {% endblock %}

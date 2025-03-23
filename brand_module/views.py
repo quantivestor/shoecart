@@ -25,10 +25,8 @@ def brand_home(request):
 @login_required
 def add_product(request):
     if request.method == "POST":
-        print("1111111111111111111111111111111111111")
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            print("2222222222222222222222222222222222")
             product = form.save(commit=False)
             product.brand = request.user.brand
             product.save()

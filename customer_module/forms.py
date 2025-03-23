@@ -34,6 +34,7 @@ class CustomerRegistrationForm(forms.ModelForm):
             "email",
             "username",
             "password",
+            "confirm_password",
             "phone_number",
             "left_image",
             "straight_image",  # Fixed typo

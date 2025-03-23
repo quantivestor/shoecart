@@ -15,8 +15,8 @@
                     <input type="checkbox" name="selected_items" value="{{ item.id }}" class="item-checkbox"
                         onchange="updateTotal()">
                     <div class="text-center cart-image-section">
-                        {% if item.product.image %}
-                        <img src="{{ item.product.image.url }}" class="img-fluid rounded" alt="{{ item.product.name }}">
+                        {% if item.product.straight_image %}
+                        <img src="{{ item.product.straight_image.url }}" class="img-fluid rounded" alt="{{ item.product.name }}">
                         {% else %}
                         <div class="no-image">No Image</div>
                         {% endif %}

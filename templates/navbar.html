@@ -2,7 +2,7 @@
     <div class="">
         <!-- Left Section: Logo and Nav Links -->
         {% if user.role == 'customer' %}
-        <a class="navbar-brand main-title" href="{% url 'user_home' %}">SHOE<span class="highlight-text">CART</span></a>
+        <a class="navbar-brand main-title" href="{% url 'product_list' %}">SHOE<span class="highlight-text">CART</span></a>
         {% elif user.role == 'staff' %}
         <a class="navbar-brand main-title" href="{% url 'staff_dashboard' %}">SHOE<span
                 class="highlight-text">CART</span></a>

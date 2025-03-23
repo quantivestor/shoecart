@@ -35,31 +35,14 @@ class Brand(models.Model):
 
 
 class Product(models.Model):
-    CATEGORY_CHOICES = [
-        ("casual", "Casual"),
-        ("formal", "Formal"),
-    ]
-
-    MATERIAL_CHOICES = [
-        ("leather", "Leather"),
-        ("cotton", "Cotton"),
-    ]
-
-    COLOR_CHOICES = [
-        ("black", "Black"),
-        ("white", "White"),
-        ("grey", "Grey"),
-        ("red", "Red"),
-    ]
-
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    description = models.TextField(max_length=100)
+    description = models.TextField(max_length=150)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField(default=1)
-    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
-    material = models.CharField(max_length=100, choices=MATERIAL_CHOICES)
-    color = models.CharField(max_length=100, choices=COLOR_CHOICES)
+    category = models.CharField(max_length=100)
+    material = models.CharField(max_length=100)
+    color = models.CharField(max_length=100)
     left_image = models.ImageField(upload_to="product_images/", null=True, blank=True)
     straight_image = models.ImageField(upload_to="product_images/", null=True, blank=True)
     right_image = models.ImageField(upload_to="product_images/", null=True, blank=True)

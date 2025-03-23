@@ -15,20 +15,20 @@ class StaffRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["email", "username", "password", "phone_number"]
+        fields = ["email", "username", "password", "confirm_password", "phone_number"]
 
 
     def clean_phone_number(self):
-        phone = self.cleaned_data.get("phone_number")
+        phone_number = self.cleaned_data.get("phone_number")
 
         # Phone number should be 10 digits (for local numbers) or follow international format
         pattern = re.compile(r"^\+?\d{10,15}$")
-        if not pattern.match(phone):
+        if not pattern.match(phone_number):
             raise ValidationError(
                 "Enter a valid phone number (10-15 digits, can start with +)."
             )
 
-        return phone
+        return phone_number
 
     def clean_password(self):
         password = self.cleaned_data.get("password")
