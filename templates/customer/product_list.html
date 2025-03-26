@@ -1,6 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- CSS for Modal -->
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 50%;
+        text-align: center;
+    }
+    .close-btn {
+        float: right;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    video {
+        width: 100%;
+        border-radius: 8px;
+    }
+    .tryon-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+    .tryon-btn:hover {
+        background-color: #0056b3;
+    }
+    </style>
 
 <div class="products-page" id="productList">
     <!-- Search Bar -->
@@ -29,7 +72,7 @@
             </button>
         </div>
         <div class="offcanvas-body">
-            <form id="filterForm" method="GET" action="{% url 'home' %}">
+            <form id="filterForm" method="GET" action="{% url 'product_list' %}">
 
                 <div>
                     <label>Brand:</label>
@@ -114,8 +157,8 @@
                         <i class="bi bi-cart-plus"></i>
                     </button>
                 </form>
-                {% if product.straight_image %}
-                    <img class="product-image" src="{{ product.straight_image.url }}" alt="{{ product.name }}">
+                {% if product.right_image %}
+                    <img class="product-image" src="{{ product.right_image.url }}" alt="{{ product.name }}">
                 {% endif %}
             </div>
             <div class="product-info">
@@ -138,14 +181,24 @@
             <p class="card-text">
                 ⭐ {{ product.avg_rating|floatformat:1 }} ({{ product.review_count }} reviews)
             </p>
-            <!-- Sizes Dropdown -->
-            {% if product.sizes %}
-            <label class="size-label" for="size-{{ product.id }}">Select Size:</label>
-            <select id="size-{{ product.id }}" name="size">
-                {% for size in product.get_size_list %}
-                <option value="{{ size }}">{{ size }}</option>
-                {% endfor %}
-            </select>
+            {% if product.stock < 1 %}
+                <p class="product-stock">Currently Unavailable</p>
+                <!-- Sizes Dropdown -->
+            {% else %}
+                {% if product.sizes %}
+                <label class="size-label" for="size-{{ product.id }}">Select Size:</label>
+                <select id="size-{{ product.id }}" name="size">
+                    {% for size in product.get_size_list %}
+                    <option value="{{ size }}">{{ size }}</option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+
+                <!-- Try-On Button -->
+                <button class="tryon-btn" onclick="openTryOnModal({{ product.id }})">
+                    Try On
+                </button>
+
             {% endif %}
 
         </div>
@@ -169,6 +222,18 @@
         {% endif %}
     </div>
 
+</div>
+
+<!-- Try-On Modal -->
+<div id="tryOnModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeTryOnModal()">&times;</span>
+        <h2>Virtual Try-On</h2>
+        <video id="tryOnVideo" autoplay loop controls>
+            <source id="videoSource" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
 </div>
 
 <script>
@@ -203,5 +268,19 @@
         });
     });
 </script>
+
+<!-- JavaScript to Handle Modal -->
+<script>
+    function openTryOnModal(productId) {
+        let videoUrl = `shoe-tryon/${productId}/`;  // Update URL pattern to match your Django view
+        document.getElementById('videoSource').src = videoUrl;
+        document.getElementById('tryOnVideo').load();
+        document.getElementById('tryOnModal').style.display = 'flex';
+    }
+    
+    function closeTryOnModal() {
+        document.getElementById('tryOnModal').style.display = 'none';
+    }
+    </script>
 
 {% endblock %}

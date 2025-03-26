@@ -127,8 +127,8 @@
                                 <i class="bi bi-cart-plus"></i>
                             </button>
                         </form>
-                        {% if product.straight_image %}
-                            <img class="product-image" src="{{ product.straight_image.url }}" alt="{{ product.name }}">
+                        {% if product.right_image %}
+                            <img class="product-image" src="{{ product.right_image.url }}" alt="{{ product.name }}">
                         {% endif %}
                     </div>
                     <div class="product-info">
@@ -147,6 +147,10 @@
                         </div>
                     </div>
                     <p class="product-description">{{ product.description }}</p>
+                    <!-- Show Average Rating & Review Count -->
+                    <p class="card-text">
+                        ⭐ {{ product.avg_rating|floatformat:1 }} ({{ product.review_count }} reviews)
+                    </p>
                     <!-- Sizes Dropdown -->
                     {% if product.sizes %}
                     <label class="size-label" for="size-{{ product.id }}">Select Size:</label>

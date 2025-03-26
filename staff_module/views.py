@@ -3,7 +3,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.mail import send_mail
 
+from ShoeCart.settings import EMAIL_HOST_USER
 from customer_module.models import Order
 
 from .forms import OrderStatusUpdateForm, StaffRegistrationForm
@@ -19,6 +21,18 @@ def update_order_status(request, order_id):
             form.save()
             # Display success message
             messages.success(request, "✅ Order status updated successfully!")
+
+            if form.cleaned_data.get("track_status", "") == "Out For Delivery":
+                send_mail(
+                    "Arriving Today",
+                    f"Dear {order.user.user.username},\n\n"
+                    f"Your order for {order.product.name} is out for delivery.\n\n"
+                    "Thank you for shopping with us!",
+                    EMAIL_HOST_USER,
+                    [order.user.user.email],
+                    fail_silently=False,
+                )
+
             return redirect(
                 "staff_dashboard"
             )  # Redirect to orders page or appropriate URL
@@ -56,16 +70,16 @@ def staff_register(request):
     return render(request, "staff/register.html", {"form": form})
 
 
-@login_required
+@login_required(login_url="login")
 def staff_logout(request):
     logout(request)
     messages.success(request, "Logged out successfully!")
     return redirect("login")
 
 
-@login_required
+@login_required(login_url="login")
 def staff_home(request):
-    orders = Order.objects.filter(is_delivered=False)
+    orders = Order.objects.filter(is_delivered=False).exclude(status="Cancelled")
     paginator = Paginator(orders, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)

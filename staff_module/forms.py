@@ -61,9 +61,7 @@ class OrderStatusUpdateForm(forms.ModelForm):
         model = Order
         fields = ["track_status", "is_delivered"]
         widgets = {
-            "track_status": forms.TextInput(
-                attrs={"placeholder": "Enter tracking status..."}
-            ),
+            "track_status": forms.Select(choices=Order.TRACK_STATUS_CHOICES),
         }
 
     def clean(self):

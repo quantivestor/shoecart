@@ -18,14 +18,8 @@ class CustomerRegistrationForm(forms.ModelForm):
     phone_number = forms.CharField(max_length=15, required=True)
 
     # Corrected Image Fields
-    left_image = forms.ImageField(
-        required=True, help_text="Upload the left-side view image of your foot"
-    )
-    straight_image = forms.ImageField(
-        required=True, help_text="Upload the straight front view image of your foot"
-    )
-    right_image = forms.ImageField(
-        required=True, help_text="Upload the right-side view image of your foot"
+    foot_video = forms.FileField(
+        required=True, help_text="Upload a shoe try-on video"
     )
 
     class Meta:
@@ -36,9 +30,7 @@ class CustomerRegistrationForm(forms.ModelForm):
             "password",
             "confirm_password",
             "phone_number",
-            "left_image",
-            "straight_image",  # Fixed typo
-            "right_image",
+            "foot_video",
         ]
 
     def clean_phone_number(self):

@@ -8,25 +8,12 @@ from brand_module.models import Product as Product
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="customer")
     phone_number = models.CharField(max_length=15)
-    left_image = models.ImageField(upload_to="foot_images/", null=True, blank=True)
-    straight_image = models.ImageField(upload_to="foot_images/", null=True, blank=True)
-    right_image = models.ImageField(upload_to="foot_images/", null=True, blank=True)
+    foot_video = models.FileField(upload_to="foot_videos/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username
-
-
-class Feedback(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    comment = models.TextField()
-    rating = models.IntegerField()
-    added_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Feedback for {self.product.name}"
 
 
 class Cart(models.Model):
@@ -47,6 +34,16 @@ class Order(models.Model):
         ("Cancelled", "Cancelled"),
         ("Refunded", "Refunded"),
     ]
+
+    TRACK_STATUS_CHOICES = [
+        ("Ready to Dispatch", "Ready to Dispatch"),
+        ("Shipped", "Shipped"),
+        ("Reached on Nearest Hub", "Reached on Nearest Hub"),
+        ("Out For Delivery", "Out For Delivery"),
+        ("Delivered", "Delivered"),
+        ("Ready To Pickup", "Ready To Pickup"),
+        ("Pickedup", "Pickedup")
+    ]
     user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
@@ -56,18 +53,30 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
     ordered_at = models.DateTimeField(auto_now_add=True)
     track_status = models.CharField(
-        max_length=100, null=True, blank=True, default="Ready to dispatch"
+        max_length=100, null=True, blank=True, choices=TRACK_STATUS_CHOICES, default="Ready to dispatch"
     )
     is_delivered = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if self.is_delivered and self.status == "Pending":
+        if self.is_delivered:
             self.track_status = "Delivered"
-            self.status = "Delivered"  # Optionally update order status too
+            if self.status not in ["Delivered", "Cancelled", "Refunded"]:
+                self.status = "Delivered"  # Update only if not already delivered/cancelled
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Order by {self.user.user.username} for {self.product.name}"
+        return f"{self.id} Order by {self.user.user.username} for {self.product.name}"
+    
+
+class Feedback(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    comment = models.TextField()
+    rating = models.IntegerField()
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback for {self.order.product.name}"
 
 
 class Transaction(models.Model):

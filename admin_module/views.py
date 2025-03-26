@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -11,23 +11,23 @@ from staff_module.models import Staff
 from .models import User
 
 
-@staff_member_required
+@login_required(login_url="login")
 def admin_dashboard(request):
     return render(request, "admin/admin_dashboard.html")
 
 
-@staff_member_required
+@login_required(login_url="login")
 def profile(request):
     return render(request, "admin/view_profile.html", {"profile": request.user})
 
 
-@staff_member_required
+@login_required(login_url="login")
 def logout_view(request):
     logout(request)
     return redirect("home")
 
 
-@staff_member_required
+@login_required(login_url="login")
 def review_brand_registrations(request):
     # Fetch all brand with pending approval status
     pending_brands = Brand.objects.filter(approval_status="pending")
@@ -38,7 +38,7 @@ def review_brand_registrations(request):
     )
 
 
-@staff_member_required
+@login_required(login_url="login")
 def approve_brand(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
     brand.approval_status = "approved"
@@ -46,7 +46,7 @@ def approve_brand(request, brand_id):
     return redirect("review_brand_registrations")
 
 
-@staff_member_required
+@login_required(login_url="login")
 def reject_brand(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
     brand.approval_status = "rejected"
@@ -54,21 +54,21 @@ def reject_brand(request, brand_id):
     return redirect("review_brand_registrations")
 
 
-@staff_member_required  # Restrict access to admin users
+@login_required(login_url="login")  # Restrict access to admin users
 def list_brand_details(request):
     # Fetch all brands from the database
     brands = Brand.objects.all()
     return render(request, "admin/brand_list.html", {"brands": brands})
 
 
-@staff_member_required  # Restrict access to admin users
+@login_required(login_url="login")  # Restrict access to admin users
 def list_customer_details(request):
     # Fetch all customers from the database
     customers = Customer.objects.all()
     return render(request, "admin/customer_list.html", {"customers": customers})
 
 
-@staff_member_required
+@login_required(login_url="login")
 def delete_brand(request, brand_id):
     brand = get_object_or_404(brand, id=brand_id)
     user = brand.user
@@ -78,7 +78,7 @@ def delete_brand(request, brand_id):
     return redirect("list_brand_details")
 
 
-@staff_member_required
+@login_required(login_url="login")
 def delete_customer(request, cus_id):
     customer = get_object_or_404(Customer, id=cus_id)
     user = customer.user
@@ -88,7 +88,7 @@ def delete_customer(request, cus_id):
     return redirect("list_customer_details")
 
 
-@staff_member_required
+@login_required(login_url="login")
 def review_staff_registrations(request):
     # Fetch all staff with pending approval status
     pending_staffs = Staff.objects.filter(approval_status="pending")
@@ -99,7 +99,7 @@ def review_staff_registrations(request):
     )
 
 
-@staff_member_required
+@login_required(login_url="login")
 def approve_staff(request, staff_id):
     staff = get_object_or_404(Staff, id=staff_id)
     staff.approval_status = "approved"
@@ -107,7 +107,7 @@ def approve_staff(request, staff_id):
     return redirect("review_staff_registrations")
 
 
-@staff_member_required
+@login_required(login_url="login")
 def reject_staff(request, staff_id):
     staff = get_object_or_404(Staff, id=staff_id)
     staff.approval_status = "rejected"
@@ -115,13 +115,13 @@ def reject_staff(request, staff_id):
     return redirect("review_staff_registrations")
 
 
-@staff_member_required  # Restrict access to admin users
+@login_required(login_url="login")  # Restrict access to admin users
 def list_staff_details(request):
     # Fetch all staff from the database
     staffs = Staff.objects.all()
     return render(request, "admin/staff_list.html", {"staffs": staffs})
 
-@staff_member_required
+@login_required(login_url="login")
 def delete_staff(request, cus_id):
     staff = get_object_or_404(Staff, id=cus_id)
     user = staff.user
@@ -242,7 +242,7 @@ def userlogin(request):
     elif request.method == "GET":
         return render(request, "login.html")
     
-@staff_member_required
+@login_required(login_url="login")
 def view_feedbacks(request):
     feedbacks = Feedback.objects.all().order_by("-added_at")
     return render(request, "admin/view_feedbacks.html", {"feedbacks": feedbacks})

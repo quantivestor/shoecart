@@ -20,13 +20,7 @@
                     <td>{{ history.product.name }}</td>
                     <td>{{ history.user.user.username }}</td>
                     <td>{{ history.ordered_at|date:"F j, Y, g:i a" }}</td>
-                    <td>
-                        {% if history.is_delivered %}
-                            <span class="badge bg-success">Delivered</span>
-                        {% else %}
-                            <span class="badge bg-warning text-dark">Pending</span>
-                        {% endif %}
-                    </td>
+                    <td>{{history.status}}</td>
                 </tr>
                 {% empty %}
                 <tr>

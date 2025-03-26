@@ -7,8 +7,6 @@ from .models import Brand, Product
 
 
 class ProductForm(forms.ModelForm):
-    left_image = forms.ImageField(required=False, help_text="Upload left view image of the product.")
-    straight_image = forms.ImageField(required=False, help_text="Upload straight view image of the product.")
     right_image = forms.ImageField(required=False, help_text="Upload right view image of the product.")
 
     class Meta:
@@ -21,8 +19,6 @@ class ProductForm(forms.ModelForm):
             "category",
             "material",
             "color",
-            "left_image",
-            "straight_image",
             "right_image",
             "sizes",
             "offer_percentage",

@@ -11,8 +11,8 @@
                 <div class="row align-items-center">
                     <!-- Product Image -->
                     <div class="col-md-2 text-center">
-                        {% if order.product.straight_image %}
-                            <img src="{{ order.product.straight_image.url }}" class="img-fluid rounded" alt="{{ order.product.name }}">
+                        {% if order.product.right_image %}
+                            <img src="{{ order.product.right_image.url }}" class="img-fluid rounded" alt="{{ order.product.name }}">
                         {% else %}
                             <div class="no-image">No Image</div>
                         {% endif %}
@@ -35,6 +35,7 @@
                     <!-- Actions & Rating -->
                     <div class="col-md-4 text-end">
                         {% if order.is_delivered %}
+                        <h1>{{order.feedback_rating}}</h1>
                             {% if order.feedback_rating %}
                                 <div class="rating">
                                     {% for star in "★★★★★"|slice:order.feedback_rating %}
@@ -45,7 +46,7 @@
                                     {% endfor %} -->
                                 </div>
                             {% else %}
-                                <a href="{% url 'add_feedback' order.product.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>
+                                <a href="{% url 'add_feedback' order.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>
 
                                 {% if order.status != "Cancelled" %}
                                     <form method="POST" action="{% url 'cancel_order' order.id %}" class="d-inline">

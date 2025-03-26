@@ -17,12 +17,12 @@ from .models import Brand, Product
 
 
 # Create your views here.
-@login_required
+@login_required(login_url="login")
 def brand_home(request):
     return render(request, "brand/brand_dashboard.html")
 
 
-@login_required
+@login_required(login_url="login")
 def add_product(request):
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
@@ -36,13 +36,13 @@ def add_product(request):
     return render(request, "brand/add_product.html", {"form": form})
 
 
-@login_required
+@login_required(login_url="login")
 def view_products(request):
     products = Product.objects.filter(brand=request.user.brand)
     return render(request, "brand/view_products.html", {"products": products})
 
 
-@login_required
+@login_required(login_url="login")
 def update_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
@@ -57,7 +57,7 @@ def update_product(request, product_id):
     )
 
 
-@login_required
+@login_required(login_url="login")
 def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
@@ -66,12 +66,12 @@ def delete_product(request, product_id):
     return render(request, "brand/delete_product.html", {"product": product})
 
 
-@login_required
+@login_required(login_url="login")
 def view_feedbacks(request):
     # Filter feedbacks for products belonging to the requested brand
     feedbacks = Feedback.objects.filter(
-        product__brand=request.user.brand
-    ).select_related("product", "customer")
+        order__product__brand=request.user.brand
+    ).select_related("order", "customer")
 
     return render(
         request,
@@ -82,7 +82,7 @@ def view_feedbacks(request):
     )
 
 
-@login_required
+@login_required(login_url="login")
 def view_sell_history(request):
     # Get the brand owned by the logged-in user
     brand = Brand.objects.get(user=request.user)
@@ -90,7 +90,7 @@ def view_sell_history(request):
     # Filter orders for items belonging to the logged-in user's brand
     sell_history = Order.objects.filter(product__brand=brand).select_related(
         "product", "user"
-    )
+    ).order_by("-ordered_at")
 
     return render(
         request,
@@ -144,13 +144,14 @@ def brand_login(request):
 
 
 # Brand Logout View
+@login_required(login_url="login")
 def brand_logout(request):
     logout(request)
     messages.success(request, "Logged out successfully!")
     return redirect("login")
 
 
-@login_required
+@login_required(login_url="login")
 def brand_profile(request):
     brand = request.user.brand  # Access the brand linked to the logged-in user
 
@@ -165,7 +166,7 @@ def brand_profile(request):
     return render(request, "brand/profile.html", {"form": form})
 
 
-@login_required
+@login_required(login_url="login")
 def approve_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
 
@@ -208,7 +209,7 @@ def approve_order(request, order_id):
     return redirect("view_sell_history")
 
 
-@login_required
+@login_required(login_url="login")
 def reject_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     order.delete()

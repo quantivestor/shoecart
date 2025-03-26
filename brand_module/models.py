@@ -43,8 +43,6 @@ class Product(models.Model):
     category = models.CharField(max_length=100)
     material = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
-    left_image = models.ImageField(upload_to="product_images/", null=True, blank=True)
-    straight_image = models.ImageField(upload_to="product_images/", null=True, blank=True)
     right_image = models.ImageField(upload_to="product_images/", null=True, blank=True)
     sizes = models.CharField(
         max_length=100, help_text="Comma-separated sizes, e.g., S,M,L,XL"
