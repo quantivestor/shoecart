@@ -284,11 +284,13 @@ input {
 }
 
 .product-image {
-  width: 100%;
+  width: 90%;
   height: 180px;
+  margin: 0 auto;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 10px;
+  padding: 5px;
 }
 
 .product-info {
@@ -306,6 +308,33 @@ input {
 .product-info .product-name p {
   font-size: 12px;
   color: #ccc;
+}
+.product-info .pricing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.product-info .pricing p {
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
+  color: #ccc;
+}
+.product-info .pricing .discounted-prices {
+  display: flex;
+  gap: 10px;
+}
+.product-info .pricing .original-price {
+  color: red;
+}
+.product-info .pricing .discounted-price {
+  color: #fff;
+}
+.product-info .pricing .offer-percentage {
+  color: rgb(0, 255, 0);
+}
+.product-info .pricing .product-price {
+  color: #fff;
 }
 
 p.product-description {
@@ -338,7 +367,7 @@ select {
 .top-section {
   position: relative;
 }
-.top-section form {
+.top-section button.try-on {
   position: absolute;
   top: 0px;
   right: 10px;
@@ -615,6 +644,54 @@ option {
 }
 .admin-landing .card .card-icon i {
   font-size: 6rem;
+}
+
+video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.tryon-btn {
+  border: 1px solid #2A2F38;
+  background-color: transparent;
+  color: white;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.tryon-btn i, .tryon-btn span {
+  display: inline-block;
+}
+.tryon-btn i {
+  font-size: 14px;
+}
+
+.tryon-btn:hover {
+  background-color: #0056b3;
+}
+
+.modal-dialog .modal-content {
+  background-color: #161B22;
+  color: #fff;
+}
+.modal-dialog .modal-content .modal-header {
+  border-bottom: 1px solid #2A2F38;
+}
+.modal-dialog .modal-content .modal-header h5 {
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.modal-dialog .modal-content .modal-header button.close-btn {
+  color: #fff !important;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
 }
 
 /*# sourceMappingURL=styles.css.map */

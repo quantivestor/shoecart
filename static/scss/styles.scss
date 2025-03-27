@@ -338,11 +338,13 @@ input {
 }
 
 .product-image {
-    width: 100%;
+    width: 90%;
     height: 180px;
+    margin: 0 auto;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
+    padding: 5px;
 }
 
 .product-info {
@@ -361,6 +363,33 @@ input {
         p {
             font-size: 12px;
             color: #ccc;
+        }
+    }
+    .pricing{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        p{
+            font-size: 12px;
+            padding: 0;
+            margin: 0;
+            color: #ccc;
+        }
+        .discounted-prices{
+            display: flex;
+            gap: 10px;
+        }
+        .original-price{
+            color: red;
+        }
+        .discounted-price{
+            color: $primary-color;
+        }
+        .offer-percentage{
+            color: rgb(0, 255, 0);
+        }
+        .product-price{
+            color: $primary-color;
         }
     }
 }
@@ -394,8 +423,7 @@ select {
 
 .top-section {
     position: relative;
-
-    form {
+    button.try-on {
         position: absolute;
         top: 0px;
         right: 10px;
@@ -672,6 +700,56 @@ option {
 
         .card-icon i {
             font-size: 6rem;
+        }
+    }
+}
+video {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.tryon-btn {
+    border: 1px solid $border-color;
+    background-color: transparent;
+    color: white;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    i,span{
+        display: inline-block;
+    }
+    i{
+        font-size: 14px;
+    }
+}
+
+.tryon-btn:hover {
+    background-color: #0056b3;
+}
+
+.modal-dialog{
+    .modal-content{
+        background-color: $bg-color;
+        color: $primary-color;
+
+        .modal-header{
+            border-bottom: 1px solid $border-color;
+            h5{
+                font-size: 16px;
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+            button.close-btn{
+                color: $primary-color !important;
+                border: none;
+                background-color: transparent;
+                font-size: 20px;
+            }
         }
     }
 }
