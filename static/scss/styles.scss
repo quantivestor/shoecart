@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -44,9 +46,11 @@ body {
 @mixin box-shadow-lg {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
-.text-success{
+
+.text-success {
     color: $secondary-color !important;
 }
+
 .main-title {
     font-size: 28px;
     color: $primary-color;
@@ -166,47 +170,46 @@ input {
 
 .hero-section {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     align-items: center;
     margin: 0 auto;
-    height: 50vh;
+    height: 65vh;
+
 
     .hero-content {
-        margin-left: 10%;
-        padding: 45px 0;
+        margin: 45px 0;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 50px;
+        
+        
         h1 {
+            position: relative;
             font-size: 3.5rem;
-            font-weight: 350;
             letter-spacing: 1px;
             text-transform: uppercase;
+            font-family: "Shadows Into Light", cursive;
+            font-weight: 500;
+            font-style: normal;
+            .overlay {
+                position: absolute;
+                top: 15%;
+                right: -10%;
+                width: 150px;
+                height: 100px;
+                background: url('../images/hero-shoe.png');
+                background-size: cover;
+            }
         }
 
         p {
             font-size: 1.4rem;
             font-weight: 300;
-        }
-    }
-
-    .hero-right {
-        height: 50vh;
-        position: relative;
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgb(22, 27, 34);
-            background: linear-gradient(90deg, rgba(22, 27, 34, 1) 4%, rgba(22, 27, 34, 0.691841702501313) 66%, rgba(0, 212, 255, 0) 100%);
-            z-index: 9999;
+            z-index: 3;
         }
 
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-            filter: hue-rotate(-80deg);
+        a {
+            z-index: 3;
         }
     }
 }
@@ -367,30 +370,37 @@ input {
             color: #ccc;
         }
     }
-    .pricing{
+
+    .pricing {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        p{
+
+        p {
             font-size: 12px;
             padding: 0;
             margin: 0;
             color: #ccc;
         }
-        .discounted-prices{
+
+        .discounted-prices {
             display: flex;
             gap: 10px;
         }
-        .original-price{
+
+        .original-price {
             color: red;
         }
-        .discounted-price{
+
+        .discounted-price {
             color: $primary-color;
         }
-        .offer-percentage{
+
+        .offer-percentage {
             color: rgb(0, 255, 0);
         }
-        .product-price{
+
+        .product-price {
             color: $primary-color;
         }
     }
@@ -425,6 +435,7 @@ select {
 
 .top-section {
     position: relative;
+
     button.try-on {
         position: absolute;
         top: 0px;
@@ -705,6 +716,7 @@ option {
         }
     }
 }
+
 video {
     width: 100%;
     border-radius: 8px;
@@ -722,10 +734,13 @@ video {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    i,span{
+
+    i,
+    span {
         display: inline-block;
     }
-    i{
+
+    i {
         font-size: 14px;
     }
 }
@@ -734,19 +749,21 @@ video {
     background-color: #0056b3;
 }
 
-.modal-dialog{
-    .modal-content{
+.modal-dialog {
+    .modal-content {
         background-color: $bg-color;
         color: $primary-color;
 
-        .modal-header{
+        .modal-header {
             border-bottom: 1px solid $border-color;
-            h5{
+
+            h5 {
                 font-size: 16px;
                 font-weight: 500;
                 text-transform: uppercase;
             }
-            button.close-btn{
+
+            button.close-btn {
                 color: $primary-color !important;
                 border: none;
                 background-color: transparent;
