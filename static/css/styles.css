@@ -688,7 +688,7 @@ video {
   text-transform: uppercase;
 }
 .modal-dialog .modal-content .modal-header button.close-btn {
-  color: #fff !important;
+  color: #050000 !important;
   border: none;
   background-color: transparent;
   font-size: 20px;

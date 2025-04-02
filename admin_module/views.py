@@ -70,7 +70,7 @@ def list_customer_details(request):
 
 @login_required(login_url="login")
 def delete_brand(request, brand_id):
-    brand = get_object_or_404(brand, id=brand_id)
+    brand = get_object_or_404(Brand, id=brand_id)
     user = brand.user
     brand.delete()
     user.delete()
@@ -122,8 +122,8 @@ def list_staff_details(request):
     return render(request, "admin/staff_list.html", {"staffs": staffs})
 
 @login_required(login_url="login")
-def delete_staff(request, cus_id):
-    staff = get_object_or_404(Staff, id=cus_id)
+def delete_staff(request, staff_id):
+    staff = get_object_or_404(Staff, id=staff_id)
     user = staff.user
     staff.delete()
     user.delete()
