@@ -10,7 +10,7 @@ class Brand(models.Model):
     )  # Link to the User model
     brand_name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
-    contact_info = models.CharField(max_length=15)
+    contact_info = models.CharField(max_length=15, unique=True)
     approval_status = models.CharField(
         max_length=10,
         choices=[
@@ -43,6 +43,13 @@ class Product(models.Model):
     category = models.CharField(max_length=100)
     material = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
+    gender = models.CharField(max_length=100, 
+        choices=[
+            ("Unisex", "Unisex"),
+            ("Male", "Male"),
+            ("Female", "Female"),
+        ],
+        default="Unisex")
     right_image = models.ImageField(upload_to="product_images/", null=True, blank=True)
     sizes = models.CharField(
         max_length=100, help_text="Comma-separated sizes, e.g., S,M,L,XL"

@@ -7,7 +7,7 @@ from brand_module.models import Product as Product
 # Create your models here.
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="customer")
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15, unique=True)
     foot_video = models.FileField(upload_to="foot_videos/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -33,6 +33,7 @@ class Order(models.Model):
         ("Delivered", "Delivered"),
         ("Cancelled", "Cancelled"),
         ("Refunded", "Refunded"),
+        ("Returned", "Returned"),
     ]
 
     TRACK_STATUS_CHOICES = [

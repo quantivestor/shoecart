@@ -105,21 +105,24 @@ def brand_register(request):
     if request.method == "POST":
         form = brandRegistrationForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user(
-                email=form.cleaned_data["email"],  # Add email here
-                username=form.cleaned_data["username"],
-                password=form.cleaned_data["password"],
-                role="brand",  # Assuming role management is in place
-            )
-            Brand.objects.create(
-                user=user,
-                brand_name=form.cleaned_data["brand_name"],
-                address=form.cleaned_data["address"],
-                # point=point,
-                contact_info=form.cleaned_data["contact_info"],
-            )
-            messages.success(request, "Brand registered successfully! Please log in.")
-            return redirect("login")
+            try:
+                user = User.objects.create_user(
+                    email=form.cleaned_data["email"],  # Add email here
+                    username=form.cleaned_data["username"],
+                    password=form.cleaned_data["password"],
+                    role="brand",  # Assuming role management is in place
+                )
+                Brand.objects.create(
+                    user=user,
+                    brand_name=form.cleaned_data["brand_name"],
+                    address=form.cleaned_data["address"],
+                    # point=point,
+                    contact_info=form.cleaned_data["contact_info"],
+                )
+                messages.success(request, "Brand registered successfully! Please log in.")
+                return redirect("login")
+            except Exception as e:
+                messages.error(request, "Email already taken")
     else:
         form = brandRegistrationForm()
     return render(request, "brand/brand_register.html", {"form": form})

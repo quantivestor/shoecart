@@ -35,21 +35,26 @@
                     <!-- Actions & Rating -->
                     <div class="col-md-4 text-end">
                         {% if order.is_delivered %}
-                        <h1>{{order.feedback_rating}}</h1>
+                        <!-- <h1>{{order.feedback_rating}}</h1> -->
                             {% if order.feedback_rating %}
                                 <div class="rating">
                                     {% for star in "★★★★★"|slice:order.feedback_rating %}
                                         <span style="color: #ffc107;">★</span>
                                     {% endfor %}
-                                    <!-- {% for empty_star in "★★★★★"|slice:5|slice:":-order.feedback_rating" %}
-                                        <span style="color: #e4e5e9;">★</span>
-                                    {% endfor %} -->
+                                    {% if order.status != "Cancelled" %}
+                                    <form method="POST" action="{% url 'return_order' order.id %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm delete-btn" onclick="return confirm('Are you sure you want to return this order? You will receive ₹{{ order.total_amount }}.')">
+                                            ❌ Return
+                                        </button>
+                                    </form>
+                                {% endif %}
                                 </div>
                             {% else %}
                                 <a href="{% url 'add_feedback' order.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>
 
                                 {% if order.status != "Cancelled" %}
-                                    <form method="POST" action="{% url 'cancel_order' order.id %}" class="d-inline">
+                                    <form method="POST" action="{% url 'return_order' order.id %}" class="d-inline">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-danger btn-sm delete-btn" onclick="return confirm('Are you sure you want to return this order? You will receive ₹{{ order.total_amount }}.')">
                                             ❌ Return
@@ -65,6 +70,8 @@
                                         ❌ Cancel Order
                                     </button>
                                 </form>
+                            {% elif order.status != "Cancelled" %}
+                                <a href="{% url 'add_feedback' order.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>
                             {% endif %}
                         {% endif %}
                     </div>

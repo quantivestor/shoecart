@@ -144,6 +144,7 @@ def home(request):
     products = Product.objects.all()
     categories = Product.objects.values_list("category", flat=True).distinct()
     colors = Product.objects.values_list("color", flat=True).distinct()
+    genders = Product.objects.values_list("gender", flat=True).distinct()
 
     # Filter by Product Name
     if product_name:
@@ -167,14 +168,14 @@ def home(request):
     if in_stock:
         products = products.filter(stock__gt=0)
 
-    paginator = Paginator(products, 10)
+    paginator = Paginator(products, 12)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     return render(
         request,
         "home.html",
-        {"products": page_obj, "categories": categories, "colors": colors},
+        {"products": page_obj, "categories": categories, "colors": colors, "genders": genders},
     )
 
 

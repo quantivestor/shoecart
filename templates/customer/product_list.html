@@ -65,12 +65,24 @@
                 </div>
 
                 <div>
-                    <label>Color>
+                    <label>Color
                         <select name="color">
                             <option value="">All Colors</option>
                             {% for color in colors %}
                         <option value="{{ color }}" {% if request.GET.color == color %}selected{% endif %}>
                                 {{ color }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                </div>
+
+                <div>
+                    <label>Gender>
+                        <select name="gender">
+                            <option value="">All</option>
+                            {% for gender in genders %}
+                        <option value="{{ gender }}" {% if request.GET.gender == gender %}selected{% endif %}>
+                                {{ gender }}
                             </option>
                             {% endfor %}
                         </select>
@@ -115,6 +127,7 @@
                 <div class="product-name">
                     <h3>{{ product.name }}</h3>
                     <p class="brand">{{ product.brand.brand_name }}</p>
+                    <p class="brand">Gender: {{ product.gender }}</p>
                 </div>
                 <div class="pricing">
                     {% if product.offer_percentage %}
@@ -126,12 +139,17 @@
                     {% else %}
                     <p class="product-price">₹{{ product.price }}</p>
                     {% endif %}
+                    <p class="discounted-price">Stock: {{ product.stock }}</p>
                 </div>
             </div>
             <p class="product-description">{{ product.description }}</p>
             <!-- Show Average Rating & Review Count -->
             <p class="card-text">
-                ⭐ {{ product.avg_rating|floatformat:1 }} ({{ product.review_count }} reviews)
+                {% if product.review_count > 0 %}
+                    <a href="{% url 'product_feedbacks' product.id %}">⭐ {{ product.avg_rating|floatformat:1 }} ({{ product.review_count }} reviews)</a>
+                {% else %}
+                    ⭐ {{ product.avg_rating|floatformat:1 }} ({{ product.review_count }} reviews)
+                {% endif %}
             </p>
             {% if product.stock < 1 %}
                 <p class="product-stock">Currently Unavailable</p>

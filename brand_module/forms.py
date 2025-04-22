@@ -19,6 +19,7 @@ class ProductForm(forms.ModelForm):
             "category",
             "material",
             "color",
+            "gender",
             "right_image",
             "sizes",
             "offer_percentage",

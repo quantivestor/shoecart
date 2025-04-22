@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 
 from admin_module.models import User
 from customer_module.models import Order
+from staff_module.models import Staff
 
 
 class StaffRegistrationForm(forms.ModelForm):
@@ -69,3 +70,10 @@ class OrderStatusUpdateForm(forms.ModelForm):
         if cleaned_data.get("is_delivered"):
             cleaned_data["track_status"] = "Delivered"
         return cleaned_data
+    
+class StaffProfileForm(forms.ModelForm):
+    phone_number = forms.CharField(max_length=15, required=True)
+
+    class Meta:
+        model = Staff
+        fields = ["phone_number"]

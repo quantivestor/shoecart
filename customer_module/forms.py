@@ -3,7 +3,7 @@ import re
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Feedback, User
+from .models import Customer, Feedback, User
 
 
 class CustomerRegistrationForm(forms.ModelForm):
@@ -82,3 +82,16 @@ class FeedbackForm(forms.ModelForm):
                 attrs={"min": 1, "max": 5, "placeholder": "Rating (1-5)"}
             ),
         }
+
+class UserProfileForm(forms.ModelForm):
+    phone_number = forms.CharField(max_length=15, required=True)
+
+    # Corrected Image Fields
+    foot_video = forms.FileField(
+        required=True, help_text="Upload a shoe try-on video"
+    )
+
+    class Meta:
+        model = Customer
+        fields = ["phone_number", "foot_video"]
+        

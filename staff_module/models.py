@@ -5,7 +5,7 @@ from admin_module.models import User
 # Create your models here.
 class Staff(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='staff')
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15, unique=True)
     approval_status = models.CharField(
         max_length=10,
         choices=[

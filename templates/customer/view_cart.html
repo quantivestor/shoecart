@@ -34,7 +34,7 @@
                     <div>
                         <h5 class="product-title">{{ item.product.name }}</h5>
                         <p>Brand: {{ item.product.brand.brand_name }}</p>
-                        <p>Size: {{ item.product.sizes }}</p>
+                        <p>Size: {{ item.size }}</p>
                         <p class="price">
                             {% if item.product.offer_percentage %}
                             <span class="text-danger"><del>₹{{ item.product.price }}</del></span>

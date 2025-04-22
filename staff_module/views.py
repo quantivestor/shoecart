@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from ShoeCart.settings import EMAIL_HOST_USER
 from customer_module.models import Order
 
-from .forms import OrderStatusUpdateForm, StaffRegistrationForm
+from .forms import OrderStatusUpdateForm, StaffProfileForm, StaffRegistrationForm
 from .models import Staff
 
 
@@ -84,3 +84,17 @@ def staff_home(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, "staff/staff_dashboard.html", {"orders": page_obj})
+
+@login_required(login_url="login")
+def staff_profile(request):
+    staff = request.user.staff
+
+    if request.method == "POST":
+        form = StaffProfileForm(request.POST, instance=staff)
+        if form.is_valid():
+            form.save()
+            return redirect("staff_dashboard")
+    else:
+        form = StaffProfileForm(instance=staff)
+
+    return render(request, "staff/profile.html", {"form": form})

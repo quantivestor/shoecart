@@ -12,6 +12,7 @@
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Created At</th>
+                <th>Approval Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ staff.user.email }}</td>
                 <td>{{ staff.phone_number }}</td>
                 <td>{{ staff.created_at }}</td>
+                <td>{{ staff.approval_status }}</td>
                 <td>
                     <!-- Delete Button with Confirmation -->
                     <form action="{% url 'delete_staff' staff.id %}" method="post" style="display:inline;">

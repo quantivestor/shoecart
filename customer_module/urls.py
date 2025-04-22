@@ -20,7 +20,10 @@ urlpatterns = [
         name="mark_order_delivered",
     ),
     path("cancel-order/<int:order_id>/", views.cancel_order, name="cancel_order"),
+    path("return-order/<int:order_id>/", views.return_order, name="return_order"),
     path("add-feedback/<int:order_id>/", views.add_feedback, name="add_feedback"),
 
     path('shoe-tryon/<int:product_id>/', views.shoe_tryon_view, name='shoe_tryon'),
+    path("profile/", views.user_profile, name="user_profile"),
+    path("product-feedbacks/<int:product_id>/", views.view_feedbacks, name="product_feedbacks"),
 ]

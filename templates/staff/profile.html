@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card profile-card shadow-lg p-4">
+        <h2 class="sub-title">Update User Profile</h2>
+
+        <form method="POST" class="mt-4">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_phone_number" class="form-label">Phone Number</label>
+                {{ form.phone_number }}
+            </div>
+
+            <button type="submit" class="mt-4 btn primary-btn w-100">Update Profile</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

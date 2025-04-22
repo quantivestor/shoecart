@@ -3,20 +3,20 @@
         <!-- Left Section: Logo and Nav Links -->
         {% if user.role == 'customer' %}
         <a class="navbar-brand main-title" href="{% url 'product_list' %}">Smart<span class="highlight-text">Sole</span></a>
-            <span>customer</span>
+            <span>{{user.username}}</span>
         {% elif user.role == 'staff' %}
         <a class="navbar-brand main-title" href="{% url 'staff_dashboard' %}">Smart<span
                 class="highlight-text">Sole</span></a>
-                <span>staff</span>
+                <span>{{user.username}}</span>
         {% elif user.role == 'brand' %}
         <a class="navbar-brand main-title" href="{% url 'brand_dashboard' %}">Smart<span
                 class="highlight-text">Sole</span></a>
-                <span>brand</span>
+                <span>{{user.username}}</span>
         {% elif user.is_superuser %}
         <p class="admin-nav-brand">
             <a class="navbar-brand main-title" href="{% url 'admin_dashboard' %}">Smart<span
                 class="highlight-text">Sole</span></a>
-                <span>admin</span>
+                <span>{{user.username}}</span>
         </p>
         {% else %}
         <a class="navbar-brand main-title" href="{% url 'home' %}">Smart<span class="highlight-text">Sole</span></a>
@@ -41,12 +41,24 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_profile' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Profile">
+                    <i class="bi bi-person highlight-text"></i>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'user_logout' %}" data-bs-toggle="tooltip" data-bs-placement="top"
                     data-bs-title="Logout">
                     <i class="bi bi-box-arrow-right logout"></i>
                 </a>
             </li>
             {% elif user.role == 'staff' %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'staff_profile' %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Profile">
+                    <i class="bi bi-person highlight-text"></i>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'staff_logout' %}" data-bs-toggle="tooltip" data-bs-placement="top"
                     data-bs-title="Logout">

@@ -11,4 +11,5 @@ urlpatterns = [
         views.update_order_status,
         name="update_order_status",
     ),
+    path("profile/", views.staff_profile, name="staff_profile"),
 ]
