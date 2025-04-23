@@ -375,6 +375,11 @@ select {
   top: 0px;
   right: 10px;
 }
+.top-section button.view-btn {
+  position: absolute;
+  top: 0px;
+  right: 80px;
+}
 
 .cart-item {
   display: grid;
