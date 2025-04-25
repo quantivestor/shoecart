@@ -93,6 +93,7 @@ def staff_profile(request):
         form = StaffProfileForm(request.POST, instance=staff)
         if form.is_valid():
             form.save()
+            messages.success(request, f"Profile updated successfully.")
             return redirect("staff_dashboard")
     else:
         form = StaffProfileForm(instance=staff)

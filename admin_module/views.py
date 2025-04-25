@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import Avg, Count
 
 from brand_module.models import Brand, Product
 from customer_module.models import Customer, Feedback
@@ -43,6 +44,7 @@ def approve_brand(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
     brand.approval_status = "approved"
     brand.save()
+    messages.success(request, f"{brand.brand_name} approved successfully.")
     return redirect("review_brand_registrations")
 
 
@@ -51,6 +53,7 @@ def reject_brand(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
     brand.approval_status = "rejected"
     brand.save()
+    messages.success(request, f"{brand.brand_name} rejected successfully.")
     return redirect("review_brand_registrations")
 
 
@@ -104,6 +107,7 @@ def approve_staff(request, staff_id):
     staff = get_object_or_404(Staff, id=staff_id)
     staff.approval_status = "approved"
     staff.save()
+    messages.success(request, f"{staff.user.username} approved successfully.")
     return redirect("review_staff_registrations")
 
 
@@ -112,6 +116,7 @@ def reject_staff(request, staff_id):
     staff = get_object_or_404(Staff, id=staff_id)
     staff.approval_status = "rejected"
     staff.save()
+    messages.success(request, f"{staff.user.username} rejected successfully.")
     return redirect("review_staff_registrations")
 
 
@@ -132,42 +137,65 @@ def delete_staff(request, staff_id):
 
 
 def home(request):
-    product_name = request.GET.get("product_name", "")
-
-    # New Filters
-    category = request.GET.get("category", "")
-    color = request.GET.get("color", "")
+    product_name = request.GET.get("product_name", "").strip()
+    category = request.GET.get("category", "").strip()
+    color = request.GET.get("color", "").strip()
+    gender = request.GET.get("gender", "").strip()
+    material = request.GET.get("material", "").strip()
     min_price = request.GET.get("min_price")
     max_price = request.GET.get("max_price")
     in_stock = request.GET.get("in_stock")
+    brand_name = request.GET.get("brand", "").strip()
 
-    products = Product.objects.all()
+    products = Product.objects.all().annotate(
+        avg_rating=Avg('order__feedback__rating'),  # Average rating
+        review_count=Count('order__feedback')  # Count total reviews
+    )
+
+    # Fetch distinct values for filtering
     categories = Product.objects.values_list("category", flat=True).distinct()
     colors = Product.objects.values_list("color", flat=True).distinct()
     genders = Product.objects.values_list("gender", flat=True).distinct()
+    materials = Product.objects.values_list("material", flat=True).distinct()
+    brands = Product.objects.values_list("brand__brand_name", flat=True).distinct()  # Corrected
 
-    # Filter by Product Name
+    # Apply Filters
     if product_name:
         products = products.filter(name__icontains=product_name)
 
-    # Filter by Category
     if category:
         products = products.filter(category__iexact=category)
 
-    # Filter by Color
+    if material:
+        products = products.filter(material__iexact=material)
+
     if color:
         products = products.filter(color__iexact=color)
 
-    # Filter by Price Range
-    if min_price:
-        products = products.filter(price__gte=min_price)
-    if max_price:
-        products = products.filter(price__lte=max_price)
+    if gender:
+        products = products.filter(gender__iexact=gender)
 
-    # Filter by In Stock
+    if min_price:
+        try:
+            min_price = float(min_price)
+            products = products.filter(price__gte=min_price)
+        except ValueError:
+            pass  # Ignore invalid price values
+
+    if max_price:
+        try:
+            max_price = float(max_price)
+            products = products.filter(price__lte=max_price)
+        except ValueError:
+            pass
+
     if in_stock:
         products = products.filter(stock__gt=0)
 
+    if brand_name:
+        products = products.filter(brand__brand_name__iexact=brand_name)  # Fixed
+
+    # Pagination
     paginator = Paginator(products, 12)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -175,7 +203,14 @@ def home(request):
     return render(
         request,
         "home.html",
-        {"products": page_obj, "categories": categories, "colors": colors, "genders": genders},
+        {
+            "products": page_obj,
+            "categories": categories,
+            "colors": colors,
+            "materials": materials,
+            "brands": brands,
+            "genders": genders,
+        },
     )
 
 

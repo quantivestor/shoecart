@@ -30,6 +30,7 @@ def add_product(request):
             product = form.save(commit=False)
             product.brand = request.user.brand
             product.save()
+            messages.success(request, f"Product added successfully.")
             return redirect("view_products")
     else:
         form = ProductForm()
@@ -49,6 +50,7 @@ def update_product(request, product_id):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
+            messages.success(request, f"Product details updated successfully.")
             return redirect("view_products")
     else:
         form = ProductForm(instance=product)
@@ -62,6 +64,7 @@ def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
         product.delete()
+        messages.success(request, f"Product deleted successfully.")
         return redirect("view_products")
     return render(request, "brand/delete_product.html", {"product": product})
 
@@ -162,6 +165,7 @@ def brand_profile(request):
         form = brandProfileForm(request.POST, instance=brand)
         if form.is_valid():
             form.save()
+            messages.success(request, f"Profile updated successfully.")
             return redirect("brand_dashboard")
     else:
         form = brandProfileForm(instance=brand)

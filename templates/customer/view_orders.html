@@ -41,7 +41,7 @@
                                     {% for star in "★★★★★"|slice:order.feedback_rating %}
                                         <span style="color: #ffc107;">★</span>
                                     {% endfor %}
-                                    {% if order.status != "Cancelled" %}
+                                    {% if order.status != "Cancelled" and order.status != "Refunded" and order.status != "Returned" %}
                                     <form method="POST" action="{% url 'return_order' order.id %}" class="d-inline">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-danger btn-sm delete-btn" onclick="return confirm('Are you sure you want to return this order? You will receive ₹{{ order.total_amount }}.')">
@@ -71,7 +71,14 @@
                                     </button>
                                 </form>
                             {% elif order.status != "Cancelled" %}
-                                <a href="{% url 'add_feedback' order.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>
+                                {% if order.feedback_rating %}
+                                    <div class="rating">
+                                        {% for star in "★★★★★"|slice:order.feedback_rating %}
+                                            <span style="color: #ffc107;">★</span>
+                                        {% endfor %}
+                                {% else %}
+                                    <a href="{% url 'add_feedback' order.id %}" class="btn btn-outline-primary btn-sm">⭐ Rate Product</a>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                     </div>

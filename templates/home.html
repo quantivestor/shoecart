@@ -81,15 +81,27 @@
                         </div>
         
                         <div>
-                            <label>Color>
-                            <select name="color">
-                                <option value="">All Colors</option>
-                                {% for color in colors %}
+                            <label>Color
+                                <select name="color">
+                                    <option value="">All Colors</option>
+                                    {% for color in colors %}
                                 <option value="{{ color }}" {% if request.GET.color == color %}selected{% endif %}>
-                                    {{ color }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                                        {{ color }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                        </div>
+        
+                        <div>
+                            <label>Gender
+                                <select name="gender">
+                                    <option value="">All</option>
+                                    {% for gender in genders %}
+                                <option value="{{ gender }}" {% if request.GET.gender == gender %}selected{% endif %}>
+                                        {{ gender }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
                         </div>
         
                         <div>

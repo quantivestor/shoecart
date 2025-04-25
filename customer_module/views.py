@@ -34,6 +34,7 @@ def user_profile(request):
         form = UserProfileForm(request.POST, instance=customer)
         if form.is_valid():
             form.save()
+            messages.success(request, f"Profile updated successfully.")
             return redirect("product_list")
     else:
         form = UserProfileForm(instance=customer)
@@ -106,6 +107,7 @@ def view_cart(request):
 def remove_from_cart(request, cart_id):
     cart_item = get_object_or_404(Cart, id=cart_id, user=request.user.customer)
     cart_item.delete()
+    messages.success(request, f"item removed from cart successfully.")
     return redirect("view_cart")
 
 
