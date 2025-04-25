@@ -166,7 +166,7 @@ input {
   height: 100%;
   background: rgb(22, 27, 34);
   background: linear-gradient(90deg, rgb(22, 27, 34) 4%, rgba(22, 27, 34, 0.6918417025) 66%, rgba(0, 212, 255, 0) 100%);
-  z-index: 9999;
+  z-index: 3;
 }
 .hero-section .hero-right img {
   width: 100%;
